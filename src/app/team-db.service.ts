@@ -6,25 +6,31 @@ import { Team } from './shared/team.model';
   providedIn: 'root'
 })
 export class TeamDbService {
-  public teams: Team[] = [];
+  public teams: Team[];
   teamsChanged = new Subject<void>();
-  constructor() { }
+  constructor() {
+    this.teams = [];
+  }
 
   addTeams(text: string) {
     let csvToRowArray = text.split("\n");
     for (let index = 0; index < csvToRowArray.length; index++) {
       let row = csvToRowArray[index].split(",");
       this.teams.push(new Team(row[1], index + 1, row[0]));
-      // this.userArray.push(new User(parseInt(row[0], 10), row[1], row[2].trim()));
+    }
+    let i = 1
+    while (this.teams.length < 16) {
+      this.teams.push(new Team("Test " + i, this.teams.length + 1, "assets/test-image.jpg"))
+      i++;
     }
     this.teamsChanged.next();
   }
-  getTeam(seed: number) {
-    for (let t of this.teams) {
-      if (seed === t.seed) {
-        return t;
-      }
-    }
-    return undefined;
+
+  getTeams() {
+    return this.teams;
+  }
+
+  getTeam(index: number) {
+    return this.teams[index];
   }
 }

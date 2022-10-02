@@ -1,7 +1,17 @@
-table {
-    width: 50vw;
+// table {
+//     width: 50vw;
+// }
+
+// img {
+//     height: 25px;
+// }
+
+.container {
+    display: flex;
+    justify-content: center;
 }
 
-img {
-    height: 25px;
+table {
+    width: 90%;
+    margin: auto;
 }

@@ -8,7 +8,7 @@ import { TeamDbService } from '../team-db.service';
   providedIn: 'root'
 })
 export class SwissToSingleService implements OnInit, OnDestroy {
-  private teams: SwissTeam[] = [];
+  private teamsTop16: SwissTeam[] = [];
   private teamsChanged: Subscription;
 
   round1Initiated = new EventEmitter<SwissMatchup[]>()
@@ -37,23 +37,23 @@ export class SwissToSingleService implements OnInit, OnDestroy {
   }
 
   getTeams() {
-    return this.teams.slice()
+    return this.teamsTop16.slice()
   }
 
   initiateBracket() {
     let teams = this.teamsDb.getTeams();
     teams.forEach((value, index) => {
-      this.teams[index] = new SwissTeam(index, []);
+      this.teamsTop16[index] = new SwissTeam(index, []);
     })
 
-    this.round1 = this.fillTeams(this.teams)
+    this.round1 = this.fillTeams(this.teamsTop16)
     console.log(this.round1)
     this.round1Initiated.emit(this.round1)
   }
 
 
   generateRound2() {
-    for (let t of this.teams) {
+    for (let t of this.teamsTop16) {
       t.swissMatchup = t.swissMatchup.slice(0, 1)
       t.update()
     }
@@ -62,8 +62,8 @@ export class SwissToSingleService implements OnInit, OnDestroy {
     let teamsLow: SwissTeam[] = []
     for (let m of this.round1) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsHigh.push(this.teams[a]);
-      teamsLow.push(this.teams[b]);
+      teamsHigh.push(this.teamsTop16[a]);
+      teamsLow.push(this.teamsTop16[b]);
     }
 
     teamsHigh.sort(SwissTeam.sortFunctionSwissRound)
@@ -73,7 +73,7 @@ export class SwissToSingleService implements OnInit, OnDestroy {
     this.round2Low = this.fillTeams(teamsLow);
   }
   generateRound3() {
-    for (let t of this.teams) {
+    for (let t of this.teamsTop16) {
       t.swissMatchup = t.swissMatchup.slice(0, 2)
       t.update()
     }
@@ -82,13 +82,13 @@ export class SwissToSingleService implements OnInit, OnDestroy {
     let teamsLow: SwissTeam[] = []
     for (let m of this.round2High) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsHigh.push(this.teams[a]);
-      teamsMid.push(this.teams[b]);
+      teamsHigh.push(this.teamsTop16[a]);
+      teamsMid.push(this.teamsTop16[b]);
     }
     for (let m of this.round2Low) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsMid.push(this.teams[a]);
-      teamsLow.push(this.teams[b]);
+      teamsMid.push(this.teamsTop16[a]);
+      teamsLow.push(this.teamsTop16[b]);
     }
 
     teamsHigh.sort(SwissTeam.sortFunctionSwissRound)
@@ -101,7 +101,7 @@ export class SwissToSingleService implements OnInit, OnDestroy {
   }
 
   generateRound4() {
-    for (let t of this.teams) {
+    for (let t of this.teamsTop16) {
       t.swissMatchup = t.swissMatchup.slice(0, 3)
       t.update()
     }
@@ -110,16 +110,16 @@ export class SwissToSingleService implements OnInit, OnDestroy {
 
     for (let m of this.round3High) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsHigh.push(this.teams[b]);
+      teamsHigh.push(this.teamsTop16[b]);
     }
     for (let m of this.round3Mid) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsHigh.push(this.teams[a]);
-      teamsLow.push(this.teams[b]);
+      teamsHigh.push(this.teamsTop16[a]);
+      teamsLow.push(this.teamsTop16[b]);
     }
     for (let m of this.round3Low) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teamsLow.push(this.teams[a]);
+      teamsLow.push(this.teamsTop16[a]);
     }
 
     teamsHigh.sort(SwissTeam.sortFunctionSwissRound)
@@ -129,7 +129,7 @@ export class SwissToSingleService implements OnInit, OnDestroy {
     this.round4Low = this.fillTeams(teamsLow)
   }
   generateRound5() {
-    for (let t of this.teams) {
+    for (let t of this.teamsTop16) {
       t.swissMatchup = t.swissMatchup.slice(0, 4)
       t.update()
     }
@@ -138,15 +138,17 @@ export class SwissToSingleService implements OnInit, OnDestroy {
 
     for (let m of this.round4High) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teams.push(this.teams[b]);
+      teams.push(this.teamsTop16[b]);
     }
     for (let m of this.round4Low) {
       const [a, b] = SwissMatchup.teamWon(m)
-      teams.push(this.teams[a]);
+      teams.push(this.teamsTop16[a]);
     }
     teams.sort(SwissTeam.sortFunctionSwissRound)
 
     this.round5 = this.fillTeams(teams)
+    console.log(this.round5)
+    console.log(this.teamsTop16)
   }
 
   fillTeams(teamsArr: SwissTeam[]): SwissMatchup[] {
@@ -161,7 +163,7 @@ export class SwissToSingleService implements OnInit, OnDestroy {
       for (var i = 0; i < teamsArr.length - 1; i++) {
         let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
 
-        if (this.teams[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
+        if (this.teamsTop16[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
 
         let arr = func(teamsArr.slice(1, teamsArr.length - 1 - i).concat(teamsArr.slice(teamsArr.length - i)))
 
@@ -183,18 +185,17 @@ export class SwissToSingleService implements OnInit, OnDestroy {
         let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
         let match = new SwissMatchup(team1Index, team2Index)
         swissArr[i] = match;
-        this.teams[team1Index].swissMatchup.push(match);
-        this.teams[team2Index].swissMatchup.push(match);
+        this.teamsTop16[team1Index].swissMatchup.push(match);
+        this.teamsTop16[team2Index].swissMatchup.push(match);
       }
     } else {
       swissArr = matchups
-      for (var i = 0; i < teamsArr.length / 2; i++) {
-        let team1Index = teamsArr[i].teamIndex;
-        let matchIndex = swissArr.findIndex((value) => { return team1Index === value.team1 || team1Index === value.team2 ? true : false })
-        let team2Index = team1Index === swissArr[matchIndex].team1 ? swissArr[matchIndex].team2 : swissArr[matchIndex].team1;
+      for (let match of swissArr) {
+        let team1Index = match.team1;
+        let team2Index = match.team2;
 
-        this.teams[team1Index].swissMatchup.push(swissArr[matchIndex]);
-        this.teams[team2Index].swissMatchup.push(swissArr[matchIndex]);
+        this.teamsTop16[team1Index].swissMatchup.push(match);
+        this.teamsTop16[team2Index].swissMatchup.push(match);
       }
     }
     return swissArr;

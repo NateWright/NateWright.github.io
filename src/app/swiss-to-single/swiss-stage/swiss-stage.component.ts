@@ -133,7 +133,6 @@ export class SwissStageComponent implements OnInit {
   }
 
   testButton() {
-    // let t = SwissMatchup.sortFunction(this.teams.data[0], this.teams.data[1]);
-    // console.log(t)
+    console.log(this.swissToSingleSrv.getTeams()[3])
   }
 }

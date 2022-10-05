@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Team } from 'src/app/shared/team.model';
+import { TeamDbService } from 'src/app/team-db.service';
 
 @Component({
   selector: 'app-swiss-team',
@@ -7,12 +8,14 @@ import { Team } from 'src/app/shared/team.model';
   styleUrls: ['./swiss-team.component.scss']
 })
 export class SwissTeamComponent implements OnInit {
-  @Input() team: Team = new Team();
+  @Input() id!: number;
+  team = new Team();
 
-  constructor() {
+  constructor(private teamDb: TeamDbService) {
   }
 
   ngOnInit(): void {
+    this.team = this.teamDb.getTeam(this.id);
   }
 
 }

@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Opponent } from 'src/app/shared/opponent.model';
+import { SwissMatchup } from 'src/app/shared/swiss-matchup.model';
 import { Team } from 'src/app/shared/team.model';
 import { TeamDbService } from 'src/app/team-db.service';
-import { SwissTeam } from '../../swiss-to-single.service';
 
 @Component({
   selector: 'app-swiss-opponent',
@@ -10,8 +9,8 @@ import { SwissTeam } from '../../swiss-to-single.service';
   styleUrls: ['./swiss-opponent.component.scss']
 })
 export class SwissOpponentComponent implements OnInit {
-  @Input() swissTeam: SwissTeam = { teamIndex: 0, swissMatchup: [] }
-  @Input() matchup: number = 0;
+  @Input() teamIndex!: number;
+  @Input() matchup!: SwissMatchup;
   opponent: number = 0;
   wins: number = 0;
   losses: number = 0;
@@ -20,9 +19,9 @@ export class SwissOpponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.opponent = this.swissTeam.teamIndex === this.swissTeam.swissMatchup[this.matchup].team1 ? this.swissTeam.swissMatchup[this.matchup].team2 : this.swissTeam.swissMatchup[this.matchup].team1;
-    this.wins = this.swissTeam.teamIndex === this.swissTeam.swissMatchup[this.matchup].team1 ? this.swissTeam.swissMatchup[this.matchup].team1Wins : this.swissTeam.swissMatchup[this.matchup].team2Wins
-    this.losses = this.swissTeam.teamIndex === this.swissTeam.swissMatchup[this.matchup].team1 ? this.swissTeam.swissMatchup[this.matchup].team2Wins : this.swissTeam.swissMatchup[this.matchup].team1Wins
+    this.opponent = this.teamIndex === this.matchup.team1 ? this.matchup.team2 : this.matchup.team1;
+    this.wins = this.teamIndex === this.matchup.team1 ? this.matchup.team1Wins : this.matchup.team2Wins
+    this.losses = this.teamIndex === this.matchup.team1 ? this.matchup.team2Wins : this.matchup.team1Wins
     this.opponentTeam = this.teamDb.getTeam(this.opponent);
   }
 

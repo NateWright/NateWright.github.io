@@ -21,6 +21,8 @@ import { SwissStageComponent } from './swiss-to-single/swiss-stage/swiss-stage.c
 import { SwissTeamComponent } from './swiss-to-single/swiss-stage/swiss-team/swiss-team.component';
 import { SwissOpponentComponent } from './swiss-to-single/swiss-stage/swiss-opponent/swiss-opponent.component';
 import { InputPageComponent } from './input-page/input-page.component';
+import { SwissMatchupComponent } from './swiss-to-single/swiss-stage/swiss-matchup/swiss-matchup.component';
+import { LeaderBoardComponent } from './swiss-to-single/swiss-stage/leader-board/leader-board.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { InputPageComponent } from './input-page/input-page.component';
     SwissTeamComponent,
     SwissOpponentComponent,
     InputPageComponent,
+    SwissMatchupComponent,
+    LeaderBoardComponent,
   ],
   imports: [
     BrowserModule,

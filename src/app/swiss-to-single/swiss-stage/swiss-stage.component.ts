@@ -12,6 +12,7 @@ import { SwissMatchup } from 'src/app/shared/swiss-matchup.model';
 export class SwissStageComponent implements OnInit {
   // displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
   displayedColumns: string[] = ['seed', 'teamName', 'Round 1']
+  teamsUnsorted: SwissTeam[] = []
   teams = new MatTableDataSource<SwissTeam>([]);
 
   round1 = new MatTableDataSource<SwissMatchup>([]);
@@ -40,9 +41,34 @@ export class SwissStageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.teamsUnsorted = this.swissToSingleSrv.getTeams()
     this.teams.data = this.swissToSingleSrv.getTeams().sort(SwissTeam.sortFunctionAllMatches);
 
     this.round1.data = this.swissToSingleSrv.round1
+  }
+
+  resetTable() {
+    this.teams = new MatTableDataSource<SwissTeam>([]);
+    this.round1 = new MatTableDataSource<SwissMatchup>([]);
+
+    this.round2High = new MatTableDataSource<SwissMatchup>([]);
+    this.round2Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round2HighValid = false;
+    this.round2LowValid = false;
+
+    this.round3High = new MatTableDataSource<SwissMatchup>([]);
+    this.round3Mid = new MatTableDataSource<SwissMatchup>([]);
+    this.round3Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round3HighValid = false;
+    this.round3MidValid = false;
+    this.round3LowValid = false;
+
+    this.round4High = new MatTableDataSource<SwissMatchup>([]);
+    this.round4Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round4HighValid = false;
+    this.round4LowValid = false;
+
+    this.round5 = new MatTableDataSource<SwissMatchup>([]);
   }
 
   refreshData() {

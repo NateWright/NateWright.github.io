@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SwissToSingleService } from '../swiss-to-single.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SwissTeam } from 'src/app/shared/swiss-team.model';
 import { SwissMatchup } from 'src/app/shared/swiss-matchup.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-swiss-stage',
   templateUrl: './swiss-stage.component.html',
   styleUrls: ['./swiss-stage.component.scss']
 })
-export class SwissStageComponent implements OnInit {
+export class SwissStageComponent implements OnInit, OnDestroy {
   // displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
+  sub: Subscription;
   displayedColumns: string[] = ['seed', 'teamName', 'Round 1']
   teamsUnsorted: SwissTeam[] = []
   teamsSorted = new MatTableDataSource<SwissTeam>([]);
@@ -36,17 +38,22 @@ export class SwissStageComponent implements OnInit {
 
   round5 = new MatTableDataSource<SwissMatchup>([]);
 
-  constructor(public swissToSingleSrv: SwissToSingleService) {
+  constructor(private swissToSingleSrv: SwissToSingleService) {
+    this.sub = this.swissToSingleSrv.initiateBracket.subscribe(() => {
+      let teams = this.swissToSingleSrv.getTeams()
+      teams.forEach((value, index) => {
+        this.teamsUnsorted.push(new SwissTeam(index, []));
+      })
+      this.teamsSorted.data = this.teamsUnsorted.slice().sort(SwissTeam.sortFunctionAllMatches);
+      this.initiateBracket();
 
+    });
   }
 
   ngOnInit(): void {
-    let teams = this.swissToSingleSrv.getTeams()
-    teams.forEach((value, index) => {
-      this.teamsUnsorted.push(new SwissTeam(index, []));
-    })
-    this.teamsSorted.data = this.teamsUnsorted.slice().sort(SwissTeam.sortFunctionAllMatches);
-    this.initiateBracket();
+  }
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   resetTable() {

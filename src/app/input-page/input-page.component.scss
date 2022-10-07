@@ -12,9 +12,25 @@
 
 .card {
     max-width: 400px;
+    margin: 10px;
 }
 
 .example-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+}
+
+div {
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+
+}
+
+button {
+    padding: 0;
 }

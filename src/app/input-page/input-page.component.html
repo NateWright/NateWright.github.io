@@ -1,17 +1,33 @@
-<form class="example-form" [formGroup]="csvForm" (submit)="onSubmit()">
+<!-- <form class="example-form" [formGroup]="csvForm" (submit)="onSubmit()">
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Input teams as CSV</mat-label>
         <textarea matInput cols="600" rows="16" placeholder="location/to/pic, Team Name"
             formControlName="csvText"></textarea>
     </mat-form-field>
     <button mat-raised-button color="accent" type="submit">Load</button>
-</form>
+</form> -->
+<div>
+    <mat-toolbar>
+        North America
+    </mat-toolbar>
+    <div class="container">
+        <button mat-button class="card">
+            <mat-card mat-button (click)="initiateTeams('assets/na/fall/regional1.csv')"
+                routerLink="/swiss-to-single-elimination">
+                <mat-card-header>
+                    <mat-card-title>NA Regional 1</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    Click Here to Begin
+                </mat-card-content>
+            </mat-card>
+        </button>
 
-<mat-card class="card">
-    <mat-card-header>
-        <mat-card-title>NA Regional 1</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <app-team></app-team>
-    </mat-card-content>
-</mat-card>
+    </div>
+
+</div>
+<div>
+    <mat-toolbar>
+        Europe
+    </mat-toolbar>
+</div>

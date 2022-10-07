@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Team } from '../shared/team.model';
 import { TeamDbService } from '../team-db.service';
+import { HttpClient } from '@angular/common/http'
 
 export interface events {
   name: string,
@@ -19,7 +20,7 @@ export class InputPageComponent implements OnInit {
     name: "NA Regional 1",
     Team
   }]
-  constructor(private teamServer: TeamDbService) {
+  constructor(private teamServer: TeamDbService, private http: HttpClient) {
     let textField = "assets/G2.webp, G2 Esports\nassets/Faze.png, Faze Clan\nassets/Furia.webp, Furia\nassets/V1.png, Version 1";
     this.csvForm = new FormGroup({
       csvText: new FormControl(textField)
@@ -34,6 +35,14 @@ export class InputPageComponent implements OnInit {
     if (formText) {
       this.teamServer.addTeams(formText.value);
     }
+  }
+
+  initiateTeams(file: string) {
+    this.http.get(file, { responseType: 'text' })
+      .subscribe((data) => {
+        this.teamServer.addTeams(data);
+      }
+      );
   }
 
 }

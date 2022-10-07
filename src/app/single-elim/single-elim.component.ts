@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { first, ReplaySubject, Subject, Subscription } from 'rxjs';
+import { last, ReplaySubject, Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-single-elim',
@@ -42,9 +42,10 @@ export class SingleElimComponent implements OnInit, OnDestroy {
   }
 
   updateResults(input: ReplaySubject<number>, output: ReplaySubject<number>) {
-    input.pipe(first()).subscribe((val) => {
+    let sub = input.subscribe((val) => {
       output.next(val);
     })
+    sub.unsubscribe();
   }
 
 }

@@ -18,11 +18,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SwissToSingleComponent } from './swiss-to-single/swiss-to-single.component';
 import { SwissStageComponent } from './swiss-to-single/swiss-stage/swiss-stage.component';
-import { SwissTeamComponent } from './swiss-to-single/swiss-stage/swiss-team/swiss-team.component';
 import { SwissOpponentComponent } from './swiss-to-single/swiss-stage/swiss-opponent/swiss-opponent.component';
 import { InputPageComponent } from './input-page/input-page.component';
 import { SwissMatchupComponent } from './swiss-to-single/swiss-stage/swiss-matchup/swiss-matchup.component';
 import { LeaderBoardComponent } from './swiss-to-single/swiss-stage/leader-board/leader-board.component';
+import { SingleElimComponent } from './single-elim/single-elim.component';
+import { SingleMatchupComponent } from './single-elim/single-matchup/single-matchup.component';
+import { TeamComponent } from './shared/team/team.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +32,13 @@ import { LeaderBoardComponent } from './swiss-to-single/swiss-stage/leader-board
     NavBarComponent,
     SwissToSingleComponent,
     SwissStageComponent,
-    SwissTeamComponent,
     SwissOpponentComponent,
     InputPageComponent,
     SwissMatchupComponent,
     LeaderBoardComponent,
+    SingleElimComponent,
+    SingleMatchupComponent,
+    TeamComponent,
   ],
   imports: [
     BrowserModule,

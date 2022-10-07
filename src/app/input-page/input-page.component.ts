@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Team } from '../shared/team.model';
 import { TeamDbService } from '../team-db.service';
+
+export interface events {
+  name: string,
+  teams: Team[]
+}
 
 @Component({
   selector: 'app-input-page',
@@ -9,6 +15,9 @@ import { TeamDbService } from '../team-db.service';
 })
 export class InputPageComponent implements OnInit {
   csvForm: FormGroup;
+  events = [{
+    name: "NA Regional 1"
+  }]
   constructor(private teamServer: TeamDbService) {
     let textField = "assets/G2.webp, G2 Esports\nassets/Faze.png, Faze Clan\nassets/Furia.webp, Furia\nassets/V1.png, Version 1";
     this.csvForm = new FormGroup({

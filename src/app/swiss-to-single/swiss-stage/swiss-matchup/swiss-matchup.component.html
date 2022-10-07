@@ -2,7 +2,7 @@
     <ng-container matColumnDef="team1">
         <th mat-header-cell *matHeaderCellDef>Team 1</th>
         <td mat-cell *matCellDef="let element">
-            <app-swiss-team [id]="element.team1"></app-swiss-team>
+            <app-team [id]="element.team1"></app-team>
         </td>
     </ng-container>
     <ng-container matColumnDef="score1">
@@ -36,7 +36,7 @@
     <ng-container matColumnDef="team2">
         <th mat-header-cell *matHeaderCellDef>Team 2</th>
         <td mat-cell *matCellDef="let element">
-            <app-swiss-team [id]="element.team2"></app-swiss-team>
+            <app-team [id]="element.team2"></app-team>
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef=" displayedColumns">

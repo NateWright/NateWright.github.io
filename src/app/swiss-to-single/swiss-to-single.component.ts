@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SwissToSingleService } from './swiss-to-single.service';
 
 @Component({
   selector: 'app-swiss-to-single',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SwissToSingleComponent implements OnInit {
 
-  constructor() { }
+  constructor(public swissToSingle: SwissToSingleService) { }
 
   ngOnInit(): void {
   }

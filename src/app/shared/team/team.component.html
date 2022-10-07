@@ -1,0 +1,12 @@
+<mat-chip-list *ngIf="team">
+    <mat-chip color="accent">
+        <img matChipAvatar src="{{ team.imagePath }}" alt="{{ team.teamName }}" />
+        {{ team.teamName }}
+    </mat-chip>
+</mat-chip-list>
+<mat-chip-list *ngIf="!team">
+    <mat-chip color="accent">
+        <img matChipAvatar src="assets/test-image.jpg" alt="NONE" />
+        {{ "NONE" }}
+    </mat-chip>
+</mat-chip-list>

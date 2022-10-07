@@ -12,9 +12,12 @@ export class SwissTeam {
     }
 
     update() {
+        this.gameDiff = 0;
         if (this.swissMatchup.length <= 0) return;
+        for (let m of this.swissMatchup) {
+            this.gameDiff += SwissMatchup.checkWinDiff(this.teamIndex, m)
+        }
         const matchup = this.swissMatchup[this.swissMatchup.length - 1]
-        this.gameDiff += SwissMatchup.checkWinDiff(this.teamIndex, matchup);
         const [a, b] = SwissMatchup.teamWon(matchup)
         if (this.teamIndex == a) {
             this.teamBlacklist.push(b)

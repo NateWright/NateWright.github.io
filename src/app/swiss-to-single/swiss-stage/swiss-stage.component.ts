@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class SwissStageComponent implements OnInit, OnDestroy {
   // displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
   sub: Subscription;
-  displayedColumns: string[] = ['seed', 'teamName', 'Round 1']
+  displayedColumns: string[] = ['teamName', 'Round 1']
   teamsUnsorted: SwissTeam[] = []
   teamsSorted = new MatTableDataSource<SwissTeam>([]);
 
@@ -40,10 +40,10 @@ export class SwissStageComponent implements OnInit, OnDestroy {
 
   constructor(private swissToSingleSrv: SwissToSingleService) {
     this.sub = this.swissToSingleSrv.initiateBracket.subscribe(() => {
-      let teams = this.swissToSingleSrv.getTeams()
-      teams.forEach((value, index) => {
-        this.teamsUnsorted.push(new SwissTeam(index, []));
-      })
+      let teams = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      for (let t of teams) {
+        this.teamsUnsorted.push(new SwissTeam(t, []));
+      }
       this.teamsSorted.data = this.teamsUnsorted.slice().sort(SwissTeam.sortFunctionAllMatches);
       this.initiateBracket();
 
@@ -117,7 +117,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       return;
     }
     this.generateRound2()
-    if (this.displayedColumns.length < 4) {
+    if (this.displayedColumns.length < 3) {
       this.displayedColumns.push('Round 2')
     }
   }
@@ -132,7 +132,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   initiateRound3() {
     if (this.round2HighValid && this.round2LowValid) {
       this.generateRound3()
-      if (this.displayedColumns.length < 5) {
+      if (this.displayedColumns.length < 4) {
         this.displayedColumns.push('Round 3')
       }
       this.refreshData()
@@ -182,7 +182,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   initiateRound4() {
     if (this.round3HighValid && this.round3MidValid && this.round3LowValid) {
       this.generateRound4()
-      if (this.displayedColumns.length < 6) {
+      if (this.displayedColumns.length < 5) {
         this.displayedColumns.push('Round 4')
       }
       this.refreshData()
@@ -229,7 +229,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     if (this.round4HighValid && this.round4LowValid) {
       this.generateRound5()
       this.refreshData()
-      if (this.displayedColumns.length < 7) {
+      if (this.displayedColumns.length < 6) {
         this.displayedColumns.push('Round 5')
       }
     }
@@ -310,7 +310,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       for (let match of swissArr) {
         let team1Index = match.team1;
         let team2Index = match.team2;
-        match.team1Wins = 3
 
         this.teamsUnsorted[team1Index].swissMatchup.push(match);
         this.teamsUnsorted[team2Index].swissMatchup.push(match);

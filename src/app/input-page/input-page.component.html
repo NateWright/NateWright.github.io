@@ -11,18 +11,9 @@
         North America
     </mat-toolbar>
     <div class="container">
-        <button mat-button class="card">
-            <mat-card mat-button (click)="initiateTeams('assets/na/fall/regional1.csv')"
-                routerLink="/swiss-to-single-elimination">
-                <mat-card-header>
-                    <mat-card-title>NA Regional 1</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    Click Here to Begin
-                </mat-card-content>
-            </mat-card>
-        </button>
-
+        <app-regional-card *ngFor="let event of naEvents" [url]="event.csvURL" [regionalName]="event.regionalName"
+            [format]="event.format" (click)="initiateTeams($event)">
+        </app-regional-card>
     </div>
 
 </div>
@@ -30,4 +21,9 @@
     <mat-toolbar>
         Europe
     </mat-toolbar>
+    <div class="container">
+        <app-regional-card *ngFor="let event of euEvents" [url]="event.csvURL" [regionalName]="event.regionalName"
+            [format]="event.format" (click)="initiateTeams($event)">
+        </app-regional-card>
+    </div>
 </div>

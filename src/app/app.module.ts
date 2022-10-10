@@ -27,6 +27,7 @@ import { LeaderBoardComponent } from './swiss-to-single/swiss-stage/leader-board
 import { SingleElimComponent } from './single-elim/single-elim.component';
 import { SingleMatchupComponent } from './single-elim/single-matchup/single-matchup.component';
 import { TeamComponent } from './shared/team/team.component';
+import { RegionalCardComponent } from './input-page/regional-card/regional-card.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { TeamComponent } from './shared/team/team.component';
     SingleElimComponent,
     SingleMatchupComponent,
     TeamComponent,
+    RegionalCardComponent,
   ],
   imports: [
     BrowserModule,

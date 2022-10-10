@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Team } from '../shared/team.model';
 import { TeamDbService } from '../team-db.service';
 import { HttpClient } from '@angular/common/http'
 
-export interface events {
-  name: string,
-  teams: Team[]
+export interface Event {
+  regionalName: string,
+  csvURL: string,
+  format: string
 }
 
 @Component({
@@ -15,27 +15,33 @@ export interface events {
   styleUrls: ['./input-page.component.scss']
 })
 export class InputPageComponent implements OnInit {
-  csvForm: FormGroup;
-  events = [{
-    name: "NA Regional 1",
-    Team
+  // csvForm: FormGroup;
+  naEvents: Event[] = [{
+    regionalName: "Fall Open",
+    csvURL: "assets/na/fall/regional1.csv",
+    format: "/swiss-to-single-elimination"
+  }]
+  euEvents: Event[] = [{
+    regionalName: "Fall Open",
+    csvURL: "assets/eu/fall/regional1.csv",
+    format: "/swiss-to-single-elimination"
   }]
   constructor(private teamServer: TeamDbService, private http: HttpClient) {
-    let textField = "assets/G2.webp, G2 Esports\nassets/Faze.png, Faze Clan\nassets/Furia.webp, Furia\nassets/V1.png, Version 1";
-    this.csvForm = new FormGroup({
-      csvText: new FormControl(textField)
-    });
+    // let textField = "assets/G2.webp, G2 Esports\nassets/Faze.png, Faze Clan\nassets/Furia.webp, Furia\nassets/V1.png, Version 1";
+    // this.csvForm = new FormGroup({
+    //   csvText: new FormControl(textField)
+    // });
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    let formText = this.csvForm.get('csvText');
-    if (formText) {
-      this.teamServer.addTeams(formText.value);
-    }
-  }
+  // onSubmit() {
+  //   let formText = this.csvForm.get('csvText');
+  //   if (formText) {
+  //     this.teamServer.addTeams(formText.value);
+  //   }
+  // }
 
   initiateTeams(file: string) {
     this.http.get(file, { responseType: 'text' })

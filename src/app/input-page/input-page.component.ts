@@ -18,12 +18,12 @@ export class InputPageComponent implements OnInit {
   // csvForm: FormGroup;
   naEvents: Event[] = [{
     regionalName: "Fall Open",
-    csvURL: "assets/na/fall/regional1.csv",
+    csvURL: "https://raw.githubusercontent.com/NateWright/NateWright.github.io/master/src/assets/na/fall/regional1.csv",
     format: "/swiss-to-single-elimination"
   }]
   euEvents: Event[] = [{
     regionalName: "Fall Open",
-    csvURL: "assets/eu/fall/regional1.csv",
+    csvURL: "https://raw.githubusercontent.com/NateWright/NateWright.github.io/master/src/assets/eu/fall/regional1.csv",
     format: "/swiss-to-single-elimination"
   }]
   constructor(private teamServer: TeamDbService, private http: HttpClient) {

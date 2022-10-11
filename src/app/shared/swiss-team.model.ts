@@ -48,7 +48,7 @@ export class SwissTeam {
         if (team1Wins > team2Wins || team1Losses < team2Losses) {
             return -1;
         }
-        if (team2Wins > team1Wins || team2Losses < team1Losses) {
+        if (team1Wins < team2Wins || team1Losses > team2Losses) {
             return 1;
         }
 

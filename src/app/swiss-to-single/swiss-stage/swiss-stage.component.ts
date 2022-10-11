@@ -110,6 +110,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
 
     this.round2High.data = this.fillTeams(teamsHigh);
     this.round2Low.data = this.fillTeams(teamsLow);
+    this.refreshData()
   }
 
   initiateRound2(valid: boolean) {

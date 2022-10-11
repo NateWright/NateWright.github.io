@@ -17,7 +17,7 @@ export class SingleMatchupComponent implements OnInit {
   }
 
   checkWin() {
-    if (this.teamScore === 3) {
+    if (this.teamScore === 4) {
       this.teamWon.next();
     }
   }

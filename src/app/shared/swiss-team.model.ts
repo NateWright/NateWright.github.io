@@ -1,12 +1,12 @@
-import { SwissMatchup } from "./swiss-matchup.model";
+import { Matchup } from "./matchup.model";
 
 export class SwissTeam {
     teamIndex: number;
-    swissMatchup: SwissMatchup[] = [];
+    swissMatchup: Matchup[] = [];
     gameDiff: number = 0;
     teamBlacklist: number[] = []
 
-    constructor(index: number, swissMatchups: SwissMatchup[]) {
+    constructor(index: number, swissMatchups: Matchup[]) {
         this.teamIndex = index;
         this.swissMatchup = swissMatchups;
     }
@@ -15,10 +15,10 @@ export class SwissTeam {
         this.gameDiff = 0;
         if (this.swissMatchup.length <= 0) return;
         for (let m of this.swissMatchup) {
-            this.gameDiff += SwissMatchup.checkWinDiff(this.teamIndex, m)
+            this.gameDiff += Matchup.checkWinDiff(this.teamIndex, m)
         }
         const matchup = this.swissMatchup[this.swissMatchup.length - 1]
-        const [a, b] = SwissMatchup.teamWon(matchup)
+        const [a, b] = Matchup.teamWon(matchup)
         if (this.teamIndex == a) {
             this.teamBlacklist.push(b)
         } else {
@@ -32,14 +32,14 @@ export class SwissTeam {
         let team2Wins = 0;
         let team2Losses = 0;
         for (let swissMatchup of a.swissMatchup) {
-            if (SwissMatchup.checkWin(a.teamIndex, swissMatchup)) {
+            if (Matchup.checkWin(a.teamIndex, swissMatchup)) {
                 team1Wins++;
             } else {
                 team1Losses++;
             }
         }
         for (let swissMatchup of b.swissMatchup) {
-            if (SwissMatchup.checkWin(b.teamIndex, swissMatchup)) {
+            if (Matchup.checkWin(b.teamIndex, swissMatchup)) {
                 team2Wins++;
             } else {
                 team2Losses++;
@@ -66,16 +66,16 @@ export class SwissTeam {
     }
 
     static sortFunctionSwissRound(a: SwissTeam, b: SwissTeam): number {
-        const team1Win = SwissMatchup.checkWin(a.teamIndex, a.swissMatchup[a.swissMatchup.length - 1])
-        const team2Win = SwissMatchup.checkWin(b.teamIndex, b.swissMatchup[b.swissMatchup.length - 1])
+        const team1Win = Matchup.checkWin(a.teamIndex, a.swissMatchup[a.swissMatchup.length - 1])
+        const team2Win = Matchup.checkWin(b.teamIndex, b.swissMatchup[b.swissMatchup.length - 1])
         if (!team1Win && team2Win) {
             return -1;
         }
         if (!team2Win && team1Win) {
             return 1;
         }
-        // const team1Dif = SwissMatchup.checkWinDiff(a.teamIndex, a.swissMatchup[a.swissMatchup.length - 1]);
-        // const team2Dif = SwissMatchup.checkWinDiff(b.teamIndex, b.swissMatchup[b.swissMatchup.length - 1]);
+        // const team1Dif = Matchup.checkWinDiff(a.teamIndex, a.swissMatchup[a.swissMatchup.length - 1]);
+        // const team2Dif = Matchup.checkWinDiff(b.teamIndex, b.swissMatchup[b.swissMatchup.length - 1]);
         const team1Dif = a.gameDiff
         const team2Dif = b.gameDiff
 

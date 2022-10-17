@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TeamDbService } from '../team-db.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private teamsDb: TeamDbService) { }
 
   ngOnInit(): void {
+  }
+
+  resetTeams() {
+    this.teamsDb.teams = [];
   }
 
 }

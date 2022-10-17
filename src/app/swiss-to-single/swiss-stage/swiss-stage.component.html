@@ -10,7 +10,8 @@
             Round 1
         </mat-toolbar>
         <!-- Round 1 -->
-        <app-swiss-matchup [round]="round1" (isValid)="initiateRound2($event)" style="width: 100%;"></app-swiss-matchup>
+        <app-swiss-matchup [round]="round1" (isValid)="initiateRound2($event)" (tableUpdate)="refreshData()"
+            style="width: 100%;"></app-swiss-matchup>
 
         <!-- Round 2 -->
         <mat-toolbar>

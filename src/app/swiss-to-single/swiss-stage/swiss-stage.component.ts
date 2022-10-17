@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SwissToSingleService } from '../swiss-to-single.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { SwissTeam } from 'src/app/shared/swiss-team.model';
-import { SwissMatchup } from 'src/app/shared/swiss-matchup.model';
+import { Matchup } from 'src/app/shared/matchup.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -17,26 +17,26 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   teamsUnsorted: SwissTeam[] = []
   teamsSorted = new MatTableDataSource<SwissTeam>([]);
 
-  round1 = new MatTableDataSource<SwissMatchup>([]);
+  round1 = new MatTableDataSource<Matchup>([]);
 
-  round2High = new MatTableDataSource<SwissMatchup>([]);
-  round2Low = new MatTableDataSource<SwissMatchup>([]);
+  round2High = new MatTableDataSource<Matchup>([]);
+  round2Low = new MatTableDataSource<Matchup>([]);
   round2HighValid = false;
   round2LowValid = false;
 
-  round3High = new MatTableDataSource<SwissMatchup>([]);
-  round3Mid = new MatTableDataSource<SwissMatchup>([]);
-  round3Low = new MatTableDataSource<SwissMatchup>([]);
+  round3High = new MatTableDataSource<Matchup>([]);
+  round3Mid = new MatTableDataSource<Matchup>([]);
+  round3Low = new MatTableDataSource<Matchup>([]);
   round3HighValid = false;
   round3MidValid = false;
   round3LowValid = false;
 
-  round4High = new MatTableDataSource<SwissMatchup>([]);
-  round4Low = new MatTableDataSource<SwissMatchup>([]);
+  round4High = new MatTableDataSource<Matchup>([]);
+  round4Low = new MatTableDataSource<Matchup>([]);
   round4HighValid = false;
   round4LowValid = false;
 
-  round5 = new MatTableDataSource<SwissMatchup>([]);
+  round5 = new MatTableDataSource<Matchup>([]);
 
   constructor(private swissToSingleSrv: SwissToSingleService) {
     this.sub = this.swissToSingleSrv.initiateBracket.subscribe(() => {
@@ -59,26 +59,26 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   resetTable() {
     this.teamsUnsorted = [];
     this.teamsSorted = new MatTableDataSource<SwissTeam>([]);
-    this.round1 = new MatTableDataSource<SwissMatchup>([]);
+    this.round1 = new MatTableDataSource<Matchup>([]);
 
-    this.round2High = new MatTableDataSource<SwissMatchup>([]);
-    this.round2Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round2High = new MatTableDataSource<Matchup>([]);
+    this.round2Low = new MatTableDataSource<Matchup>([]);
     this.round2HighValid = false;
     this.round2LowValid = false;
 
-    this.round3High = new MatTableDataSource<SwissMatchup>([]);
-    this.round3Mid = new MatTableDataSource<SwissMatchup>([]);
-    this.round3Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round3High = new MatTableDataSource<Matchup>([]);
+    this.round3Mid = new MatTableDataSource<Matchup>([]);
+    this.round3Low = new MatTableDataSource<Matchup>([]);
     this.round3HighValid = false;
     this.round3MidValid = false;
     this.round3LowValid = false;
 
-    this.round4High = new MatTableDataSource<SwissMatchup>([]);
-    this.round4Low = new MatTableDataSource<SwissMatchup>([]);
+    this.round4High = new MatTableDataSource<Matchup>([]);
+    this.round4Low = new MatTableDataSource<Matchup>([]);
     this.round4HighValid = false;
     this.round4LowValid = false;
 
-    this.round5 = new MatTableDataSource<SwissMatchup>([]);
+    this.round5 = new MatTableDataSource<Matchup>([]);
   }
 
   refreshData() {
@@ -100,7 +100,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     let teamsHigh: SwissTeam[] = []
     let teamsLow: SwissTeam[] = []
     for (let m of this.round1.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsHigh.push(this.teamsUnsorted[a]);
       teamsLow.push(this.teamsUnsorted[b]);
     }
@@ -149,12 +149,12 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     let teamsMid: SwissTeam[] = []
     let teamsLow: SwissTeam[] = []
     for (let m of this.round2High.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsHigh.push(this.teamsUnsorted[a]);
       teamsMid.push(this.teamsUnsorted[b]);
     }
     for (let m of this.round2Low.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsMid.push(this.teamsUnsorted[a]);
       teamsLow.push(this.teamsUnsorted[b]);
     }
@@ -199,16 +199,16 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     let teamsLow: SwissTeam[] = []
 
     for (let m of this.round3High.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsHigh.push(this.teamsUnsorted[b]);
     }
     for (let m of this.round3Mid.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsHigh.push(this.teamsUnsorted[a]);
       teamsLow.push(this.teamsUnsorted[b]);
     }
     for (let m of this.round3Low.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teamsLow.push(this.teamsUnsorted[a]);
     }
 
@@ -244,11 +244,11 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     let teams: SwissTeam[] = []
 
     for (let m of this.round4High.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teams.push(this.teamsUnsorted[b]);
     }
     for (let m of this.round4Low.data) {
-      const [a, b] = SwissMatchup.teamWon(m)
+      const [a, b] = Matchup.teamWon(m)
       teams.push(this.teamsUnsorted[a]);
     }
     teams.sort(SwissTeam.sortFunctionSwissRound)
@@ -269,9 +269,9 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   testButton() {
   }
 
-  fillTeams(teamsArr: SwissTeam[]): SwissMatchup[] {
-    let swissArr: SwissMatchup[] = [];
-    let func = (teamsArr: SwissTeam[]): SwissMatchup[] | undefined => {
+  fillTeams(teamsArr: SwissTeam[]): Matchup[] {
+    let swissArr: Matchup[] = [];
+    let func = (teamsArr: SwissTeam[]): Matchup[] | undefined => {
       if (teamsArr.length < 1) {
         return [];
       }
@@ -287,7 +287,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
 
         if (arr === undefined) { continue; }
 
-        let temp = [new SwissMatchup(team1Index, team2Index)]
+        let temp = [new Matchup(team1Index, team2Index)]
         temp.push(...arr);
         return temp;
       }
@@ -301,7 +301,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       for (var i = 0; i < teamsArr.length / 2; i++) {
         let team1Index = teamsArr[i].teamIndex;
         let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
-        let match = new SwissMatchup(team1Index, team2Index)
+        let match = new Matchup(team1Index, team2Index)
         swissArr[i] = match;
         this.teamsUnsorted[team1Index].swissMatchup.push(match);
         this.teamsUnsorted[team2Index].swissMatchup.push(match);

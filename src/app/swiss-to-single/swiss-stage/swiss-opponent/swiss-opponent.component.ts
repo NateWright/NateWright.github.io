@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SwissMatchup } from 'src/app/shared/swiss-matchup.model';
+import { Matchup } from 'src/app/shared/matchup.model';
 import { Team } from 'src/app/shared/team.model';
 import { TeamDbService } from 'src/app/team-db.service';
 
@@ -10,7 +10,7 @@ import { TeamDbService } from 'src/app/team-db.service';
 })
 export class SwissOpponentComponent implements OnInit {
   @Input() teamIndex!: number;
-  @Input() matchup!: SwissMatchup;
+  @Input() matchup!: Matchup;
   opponent: number = 0;
   wins: number = 0;
   losses: number = 0;

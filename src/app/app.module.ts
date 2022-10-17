@@ -28,6 +28,8 @@ import { SingleElimComponent } from './single-elim/single-elim.component';
 import { SingleMatchupComponent } from './single-elim/single-matchup/single-matchup.component';
 import { TeamComponent } from './shared/team/team.component';
 import { RegionalCardComponent } from './input-page/regional-card/regional-card.component';
+import { GroupsToSingleComponent } from './groups-to-single/groups-to-single.component';
+import { GroupsComponent } from './groups-to-single/groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { RegionalCardComponent } from './input-page/regional-card/regional-card.
     SingleMatchupComponent,
     TeamComponent,
     RegionalCardComponent,
+    GroupsToSingleComponent,
+    GroupsComponent,
   ],
   imports: [
     BrowserModule,

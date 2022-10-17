@@ -27,7 +27,6 @@ export class InputPageComponent implements OnInit {
       .get<Event[]>("https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/master/brackets/RLCS2022-2023/naEvents.json")
       .subscribe((events: Event[]) => {
         this.naEvents = events;
-        console.log(events)
       })
     this.http
       .get<Event[]>("https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/master/brackets/RLCS2022-2023/euEvents.json")

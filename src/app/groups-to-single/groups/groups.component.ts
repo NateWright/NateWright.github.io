@@ -3,11 +3,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Matchup } from 'src/app/shared/matchup.model';
 
 @Component({
-  selector: 'app-swiss-matchup',
-  templateUrl: './swiss-matchup.component.html',
-  styleUrls: ['./swiss-matchup.component.scss']
+  selector: 'app-groups',
+  templateUrl: './groups.component.html',
+  styleUrls: ['./groups.component.scss']
 })
-export class SwissMatchupComponent implements OnInit {
+export class GroupsComponent implements OnInit {
+
   @Input() round!: MatTableDataSource<Matchup>;
   @Output() isValid = new EventEmitter<boolean>();
   @Output() tableUpdate = new EventEmitter<void>();

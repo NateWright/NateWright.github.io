@@ -1,4 +1,4 @@
-export class SwissMatchup {
+export class Matchup {
     public team1: number;
     public team2: number;
     public team1Wins: number;
@@ -14,14 +14,14 @@ export class SwissMatchup {
         return (this.team1Wins > this.team2Wins || this.team1Wins < this.team2Wins) && (this.team1Wins === 3 || this.team2Wins === 3)
     }
 
-    static checkWin(index: number, match: SwissMatchup): boolean {
-        return SwissMatchup.checkWinDiff(index, match) > 0;
+    static checkWin(index: number, match: Matchup): boolean {
+        return Matchup.checkWinDiff(index, match) > 0;
     }
 
-    static checkWinDiff(index: number, match: SwissMatchup) {
+    static checkWinDiff(index: number, match: Matchup) {
         return index === match.team1 ? match.team1Wins - match.team2Wins : match.team2Wins - match.team1Wins;
     }
-    static teamWon(match: SwissMatchup) {
+    static teamWon(match: Matchup) {
         if (match.team1Wins > match.team2Wins) {
             return [match.team1, match.team2]
         }

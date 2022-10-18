@@ -1,4 +1,4 @@
 <div class="container">
-    <app-swiss-stage class="item"></app-swiss-stage>
-    <app-single-elim class="item" [teamsSubject]="this.swissToSingle.teamsTop8"></app-single-elim>
+    <app-swiss-stage class="item" [loadBracket]="this.initiateBracket" (teamsTop8)="setTop8($event)"></app-swiss-stage>
+    <app-single-elim class="item" [teamsSubject]="this.teamsTop8"></app-single-elim>
 </div>

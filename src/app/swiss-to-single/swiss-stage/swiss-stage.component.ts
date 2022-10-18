@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SwissToSingleService } from '../swiss-to-single.service';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SwissTeam } from 'src/app/shared/swiss-team.model';
 import { Matchup } from 'src/app/shared/matchup.model';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-swiss-stage',
@@ -12,7 +11,9 @@ import { Subscription } from 'rxjs';
 })
 export class SwissStageComponent implements OnInit, OnDestroy {
   // displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
-  sub: Subscription;
+  @Input() loadBracket!: Subject<void>;
+  @Output() teamsTop8 = new EventEmitter<number[]>();
+  sub!: Subscription;
   displayedColumns: string[] = ['teamName', 'Round 1']
   teamsUnsorted: SwissTeam[] = []
   teamsSorted = new MatTableDataSource<SwissTeam>([]);
@@ -38,8 +39,10 @@ export class SwissStageComponent implements OnInit, OnDestroy {
 
   round5 = new MatTableDataSource<Matchup>([]);
 
-  constructor(private swissToSingleSrv: SwissToSingleService) {
-    this.sub = this.swissToSingleSrv.initiateBracket.subscribe(() => {
+  constructor() { }
+
+  ngOnInit(): void {
+    this.sub = this.loadBracket.subscribe(() => {
       let teams = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
       for (let t of teams) {
         this.teamsUnsorted.push(new SwissTeam(t, []));
@@ -48,9 +51,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       this.initiateBracket();
 
     });
-  }
-
-  ngOnInit(): void {
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
@@ -262,7 +262,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       for (let t of this.teamsSorted.data.slice(0, 8)) {
         teams.push(t.teamIndex)
       }
-      this.swissToSingleSrv.setTop8(teams)
+      this.teamsTop8.next(teams)
     }
   }
 

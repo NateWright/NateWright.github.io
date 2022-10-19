@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { GroupsToSingleComponent } from './groups-to-single/groups-to-single.component';
 import { InputPageComponent } from './input-page/input-page.component';
-import { SwissToSingleComponent } from './swiss-to-single/swiss-to-single.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
     component: InputPageComponent
   }, {
     path: 'swiss-to-single-elimination',
-    component: SwissToSingleComponent
+    loadChildren: () => import('./swiss-to-single/swiss-to-single.module').then(m => m.SwissToSingleModule)
   }, {
     path: 'groups-to-single-elimination',
     component: GroupsToSingleComponent
@@ -23,7 +22,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(
+    routes, {
+    preloadingStrategy: PreloadAllModules
+  }
+  )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  dbURL: "https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/master/"
 };

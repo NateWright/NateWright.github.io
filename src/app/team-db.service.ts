@@ -37,7 +37,6 @@ export class TeamDbService {
     this.teams = Array<Team>(16);
     let promises = []
     for (let t of teams) {
-      console.log(t)
       promises.push(lastValueFrom(this.http.get<TeamJSON>(environment.dbURL + 'teams/' + t + '.json')))
     }
     const result = await Promise.all(promises)

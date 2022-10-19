@@ -17,9 +17,6 @@ export class SwissToSingleComponent implements OnInit {
 
   constructor(private teamsDb: TeamDbService, private route: ActivatedRoute) {
     this.teamsChanged = this.teamsDb.teamsChanged.subscribe(() => {
-      if (this.params.length) {
-        this.teamsDb.initiateTeamsDb(this.params)
-      }
       this.teamsTop16 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
       this.initiateBracket.next()
     });
@@ -34,6 +31,7 @@ export class SwissToSingleComponent implements OnInit {
         return;
       }
       this.params = param.split(' ')
+      this.teamsDb.initiateTeamsDb(this.params)
     })
   }
 

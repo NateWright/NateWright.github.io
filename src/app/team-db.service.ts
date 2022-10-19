@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { lastValueFrom, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Team } from './shared/team.model';
 
-interface TEAMDB {
+interface TeamJSON {
   team: string,
   url: string
 }
@@ -12,18 +13,9 @@ interface TEAMDB {
   providedIn: 'root'
 })
 export class TeamDbService {
-  private allTeams: TEAMDB[] = []
-  public teams: Team[];
+  public teams: Team[] = [];
   teamsChanged = new Subject<void>();
   constructor(private http: HttpClient) {
-    this.teams = [];
-
-    this.http.get<TEAMDB[]>("https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/dev/brackets/RLCS2022-2023/teams.json").subscribe(
-      (teams) => {
-        this.allTeams = teams
-        this.teamsChanged.next();
-      }
-    )
   }
 
   initiateTeams(text: string) {
@@ -41,18 +33,19 @@ export class TeamDbService {
     this.teamsChanged.next();
   }
 
-  initiateTeamsDb(teams: string[]) {
-    this.teams = []
-    for (let i = 0; i < teams.length; i++) {
-      let teamName = teams[i].replace('-', ' ')
-      let t = this.allTeams.find((value) => {
-        if (teamName == value.team) {
-          return value;
-        }
-        return undefined
-      })
-      this.teams.push(new Team(t?.team, i, t?.url))
+  async initiateTeamsDb(teams: string[]) {
+    this.teams = Array<Team>(16);
+    let promises = []
+    for (let t of teams) {
+      console.log(t)
+      promises.push(lastValueFrom(this.http.get<TeamJSON>(environment.dbURL + 'teams/' + t + '.json')))
     }
+    const result = await Promise.all(promises)
+    for (let i = 0; i < this.teams.length; i++) {
+      this.teams[i] = new Team(result[i].team, i, result[i].url)
+    }
+
+    this.teamsChanged.next();
   }
 
   getTeams() {

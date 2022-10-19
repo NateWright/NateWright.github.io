@@ -1,3 +1,28 @@
 <div class="container">
-    <app-groups></app-groups>
+    <mat-grid-list cols="2" rowHeight="1:1">
+        <mat-grid-tile>
+            <div class="container">
+                <mat-toolbar class="item">Group A</mat-toolbar>
+                <app-groups class="item" [teamsSubject]="groupA"></app-groups>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="container">
+                <mat-toolbar class="item">Group B</mat-toolbar>
+                <app-groups class="item" [teamsSubject]="groupB"></app-groups>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="container">
+                <mat-toolbar class="item">Group C</mat-toolbar>
+                <app-groups class="item" [teamsSubject]="groupC"></app-groups>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="container">
+                <mat-toolbar class="item">Group D</mat-toolbar>
+                <app-groups class="item" [teamsSubject]="groupD"></app-groups>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>

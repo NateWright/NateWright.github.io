@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TeamDbService } from '../team-db.service';
 import { HttpClient } from '@angular/common/http'
 
-export interface Event {
+interface Event {
   regionalName: string,
   csvURL: string,
   format: string
@@ -48,7 +48,7 @@ export class InputPageComponent implements OnInit {
   initiateTeams(file: string) {
     this.http.get(file, { responseType: 'text' })
       .subscribe((data) => {
-        this.teamServer.addTeams(data);
+        this.teamServer.initiateTeams(data);
       }
       );
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,15 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'RLCS Bracket Prediction';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.router.navigate([''])
+    // this.route.queryParams.subscribe((params: Params) => {
+    //   let param: string = params['teams']
+    //   console.log(param)
+    //   if (param == undefined) {
+    //     this.router.navigate([''])
+    //   }
+    // })
   }
 }

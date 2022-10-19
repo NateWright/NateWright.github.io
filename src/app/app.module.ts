@@ -30,6 +30,7 @@ import { TeamComponent } from './shared/team/team.component';
 import { RegionalCardComponent } from './input-page/regional-card/regional-card.component';
 import { GroupsToSingleComponent } from './groups-to-single/groups-to-single.component';
 import { GroupsComponent } from './groups-to-single/groups/groups.component';
+import { CreateBracketComponent } from './create-bracket/create-bracket.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { GroupsComponent } from './groups-to-single/groups/groups.component';
     RegionalCardComponent,
     GroupsToSingleComponent,
     GroupsComponent,
+    CreateBracketComponent,
   ],
   imports: [
     BrowserModule,

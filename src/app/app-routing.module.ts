@@ -11,6 +11,7 @@ const routes: Routes = [
     pathMatch: 'full'
   }, {
     path: 'input',
+    title: 'RLCS Predictions',
     component: InputPageComponent
   }, {
     path: 'swiss-to-single-elimination',

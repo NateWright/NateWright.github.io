@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { SwissTeam } from '../shared/swiss-team.model';
 import { TeamDbService } from '../team-db.service';
 
 @Component({
@@ -12,6 +14,7 @@ export class SwissToSingleComponent implements OnInit {
   private params: string[] = [];
   private teamsTop16: number[] = [];
   private teamsChanged: Subscription;
+  teamsSorted = new MatTableDataSource<SwissTeam>([]);
   teamsTop8 = new Subject<number[]>();
   initiateBracket = new EventEmitter<void>()
 

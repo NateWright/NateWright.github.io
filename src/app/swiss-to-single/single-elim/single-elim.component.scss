@@ -32,7 +32,7 @@
 }
 
 .round .game-spacer {
-    flex-grow: 1.45;
+    flex-grow: 2;
 }
 
 /*
@@ -45,9 +45,9 @@ body {
     line-height: 1.4em;
 }
 
-li.game {
-    padding-left: 20px;
-}
+// li.game {
+//     padding-left: 20px;
+// }
 
 li.game.winner {
     font-weight: bold;
@@ -69,4 +69,8 @@ li.game-spacer {
 
 li.game-bottom {
     border-top: 1px solid #aaa;
+}
+
+app-swiss-matchup {
+    width: 100%;
 }

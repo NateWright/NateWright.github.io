@@ -20,6 +20,9 @@ import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
+import { SwissTeamComponent } from './swiss-stage/swiss-team/swiss-team.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -32,6 +35,7 @@ import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
     LeaderBoardComponent,
     SingleElimComponent,
     SingleMatchupComponent,
+    SwissTeamComponent,
   ],
   imports: [
     FormsModule,
@@ -47,7 +51,9 @@ import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
     MatSelectModule,
     HttpClientModule,
     SharedModule,
-    SwissToSingleRoutingModule
+    SwissToSingleRoutingModule,
+    MatDividerModule,
+    MatTabsModule,
   ]
 })
 export class SwissToSingleModule { }

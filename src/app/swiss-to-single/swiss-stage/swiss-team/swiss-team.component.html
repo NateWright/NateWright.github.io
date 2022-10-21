@@ -1,0 +1,14 @@
+<mat-card class="example-card" *ngIf="team">
+    <mat-card-header>
+        <div mat-card-avatar class="team-image" [style]="{'background-image' : 'url(' + team.imagePath + ')'}"></div>
+        <mat-card-title>{{ team.teamName }}</mat-card-title>
+    </mat-card-header>
+
+</mat-card>
+<mat-card class="example-card" *ngIf="!team">
+    <mat-card-header>
+        <div mat-card-avatar class="team-image" [style]="{'background-image' : 'url(assets/test-image.jpg)'}">
+        </div>
+        <mat-card-title>{{ "NONE" }}</mat-card-title>
+    </mat-card-header>
+</mat-card>

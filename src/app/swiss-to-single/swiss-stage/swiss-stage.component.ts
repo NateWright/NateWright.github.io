@@ -13,10 +13,9 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   // displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
   @Input() loadBracket!: Subject<void>;
   @Output() teamsTop8 = new EventEmitter<number[]>();
+  @Input() teamsSorted!: MatTableDataSource<SwissTeam>;
   sub!: Subscription;
-  displayedColumns: string[] = ['teamName', 'Round 1']
   teamsUnsorted: SwissTeam[] = []
-  teamsSorted = new MatTableDataSource<SwissTeam>([]);
 
   round1 = new MatTableDataSource<Matchup>([]);
 
@@ -56,31 +55,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  resetTable() {
-    this.teamsUnsorted = [];
-    this.teamsSorted = new MatTableDataSource<SwissTeam>([]);
-    this.round1 = new MatTableDataSource<Matchup>([]);
-
-    this.round2High = new MatTableDataSource<Matchup>([]);
-    this.round2Low = new MatTableDataSource<Matchup>([]);
-    this.round2HighValid = false;
-    this.round2LowValid = false;
-
-    this.round3High = new MatTableDataSource<Matchup>([]);
-    this.round3Mid = new MatTableDataSource<Matchup>([]);
-    this.round3Low = new MatTableDataSource<Matchup>([]);
-    this.round3HighValid = false;
-    this.round3MidValid = false;
-    this.round3LowValid = false;
-
-    this.round4High = new MatTableDataSource<Matchup>([]);
-    this.round4Low = new MatTableDataSource<Matchup>([]);
-    this.round4HighValid = false;
-    this.round4LowValid = false;
-
-    this.round5 = new MatTableDataSource<Matchup>([]);
-  }
-
   refreshData() {
     let teams = this.teamsSorted.data.slice().sort(SwissTeam.sortFunctionAllMatches);
     this.teamsSorted.data = []
@@ -118,9 +92,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       return;
     }
     this.generateRound2()
-    if (this.displayedColumns.length < 3) {
-      this.displayedColumns.push('Round 2')
-    }
   }
   round2H(b: boolean) {
     this.round2HighValid = b;
@@ -133,9 +104,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   initiateRound3() {
     if (this.round2HighValid && this.round2LowValid) {
       this.generateRound3()
-      if (this.displayedColumns.length < 4) {
-        this.displayedColumns.push('Round 3')
-      }
       this.refreshData()
     }
   }
@@ -183,9 +151,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   initiateRound4() {
     if (this.round3HighValid && this.round3MidValid && this.round3LowValid) {
       this.generateRound4()
-      if (this.displayedColumns.length < 5) {
-        this.displayedColumns.push('Round 4')
-      }
       this.refreshData()
     }
   }
@@ -230,9 +195,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     if (this.round4HighValid && this.round4LowValid) {
       this.generateRound5()
       this.refreshData()
-      if (this.displayedColumns.length < 6) {
-        this.displayedColumns.push('Round 5')
-      }
     }
   }
   generateRound5() {
@@ -264,9 +226,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       }
       this.teamsTop8.next(teams)
     }
-  }
-
-  testButton() {
   }
 
   fillTeams(teamsArr: SwissTeam[]): Matchup[] {

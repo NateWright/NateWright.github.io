@@ -16,13 +16,13 @@ mat-form-field {
 li {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
-li.game {
-    padding-left: 20px;
-}
+// li.game {
+//     padding-left: 20px;
+// }
 
 li.game.winner {
     font-weight: bold;
@@ -44,4 +44,14 @@ li.game-spacer {
 
 li.game-bottom {
     border-top: 1px solid #aaa;
+}
+
+input {
+    font-size: large;
+}
+
+app-swiss-team {
+    align-self: center;
+    width: 200px;
+    margin-top: auto;
 }

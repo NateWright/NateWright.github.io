@@ -15,6 +15,7 @@ export class SwissOpponentComponent implements OnInit {
   wins: number = 0;
   losses: number = 0;
   opponentTeam: Team = new Team();
+  selected = this.wins || this.losses ? true : false;
   constructor(private teamDb: TeamDbService) {
   }
 

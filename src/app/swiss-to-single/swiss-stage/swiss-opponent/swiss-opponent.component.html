@@ -1,5 +1,6 @@
 <mat-chip-list>
-    <mat-chip [color]="this.wins > this.losses ? 'primary' : 'accent'" selected>
+    <mat-chip [color]="this.wins >= this.losses ? 'accent' : 'warn'"
+        [selected]="this.wins || this.losses ? true : false">
         <img matChipAvatar src="{{ opponentTeam.imagePath }}" alt="{{ opponentTeam.teamName }}" />
         {{ wins }} - {{losses}}
     </mat-chip>

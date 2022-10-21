@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { GroupsToSingleComponent } from './groups-to-single/groups-to-single.component';
 import { InputPageComponent } from './input-page/input-page.component';
 
 const routes: Routes = [
@@ -17,7 +16,7 @@ const routes: Routes = [
     loadChildren: () => import('./swiss-to-single/swiss-to-single.module').then(m => m.SwissToSingleModule)
   }, {
     path: 'groups-to-single-elimination',
-    component: GroupsToSingleComponent
+    loadChildren: () => import('./groups-to-single/groups-to-single.module').then(m => m.GroupsToSingleModule)
   }
 ];
 

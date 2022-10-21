@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { FormControl, FormGroup } from '@angular/forms';
 import { TeamDbService } from '../team-db.service';
 import { HttpClient } from '@angular/common/http'
 import { environment } from 'src/environments/environment';
@@ -16,7 +15,6 @@ interface Event {
   styleUrls: ['./input-page.component.scss']
 })
 export class InputPageComponent implements OnInit {
-  // csvForm: FormGroup;
   naEvents: Event[] = []
   euEvents: Event[] = [];
   constructor(private teamServer: TeamDbService, private http: HttpClient) {

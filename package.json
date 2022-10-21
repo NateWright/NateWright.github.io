@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "sme": "ng b -c=sme && source-map-explorer docs/**/*.js --html > /tmp/build.html"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^14.2.3",
     "@angular/router": "^14.2.3",
     "rxjs": "~7.4.0",
+    "source-map-explorer": "^2.5.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

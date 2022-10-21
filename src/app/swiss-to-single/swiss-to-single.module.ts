@@ -13,13 +13,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
 
 
@@ -36,7 +35,6 @@ import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
   ],
   imports: [
     FormsModule,
-    ReactiveFormsModule,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
@@ -48,7 +46,6 @@ import { SwissToSingleRoutingModule } from './swiss-to-single-routing.module';
     MatFormFieldModule,
     MatSelectModule,
     HttpClientModule,
-    MatRippleModule,
     SharedModule,
     SwissToSingleRoutingModule
   ]

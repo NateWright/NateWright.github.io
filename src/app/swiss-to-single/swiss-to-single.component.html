@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group class="header">
     <mat-tab label="Swiss Stage">
         <app-swiss-stage class="item" [loadBracket]="this.initiateBracket" [teamsSorted]="teamsSorted"
             (teamsTop8)="setTop8($event)">
@@ -9,6 +9,5 @@
     </mat-tab>
     <mat-tab label="Single Elimination">
         <app-single-elim class="item" [teamsSubject]="this.teamsTop8"></app-single-elim>
-
     </mat-tab>
 </mat-tab-group>

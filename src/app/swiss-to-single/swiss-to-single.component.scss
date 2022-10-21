@@ -1,3 +1,6 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
 .container {
     display: flex;
     flex-direction: column;
@@ -10,4 +13,13 @@
 
 app-leader-board {
     width: 80%;
+}
+
+$my-palette: mat.define-palette(mat.$grey-palette);
+
+:host ::ng-deep .mat-tab-header {
+    top: 0;
+    position: sticky;
+    z-index: 1000;
+    background-color: mat.get-color-from-palette($my-palette, 800);
 }

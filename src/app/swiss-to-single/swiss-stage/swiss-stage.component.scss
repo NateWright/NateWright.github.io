@@ -14,6 +14,23 @@
     justify-content: center;
 }
 
+.swiss-container {
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 1600px) {
+    .swiss-container {
+        flex-direction: column;
+    }
+
+    .round3 {
+        flex-direction: column;
+
+    }
+
+}
+
 .swissHolder {
     width: 80%;
 }

@@ -4,14 +4,14 @@ import { Team } from 'src/app/shared/team.model';
 import { TeamDbService } from 'src/app/team-db.service';
 
 @Component({
-  selector: 'app-swiss-team',
-  templateUrl: './swiss-team.component.html',
-  styleUrls: ['./swiss-team.component.scss']
+  selector: 'app-team-card',
+  templateUrl: './team-card.component.html',
+  styleUrls: ['./team-card.component.scss']
 })
-export class SwissTeamComponent implements OnInit {
+export class TeamCardComponent implements OnInit {
 
   @Input() id!: Subject<number> | number;
-  team!: Team;
+  @Input() team!: Team;
 
   idSub!: Subscription;
 
@@ -24,12 +24,14 @@ export class SwissTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (typeof (this.id) === "number") {
-      this.team = this.teamDb.getTeam(this.id);
-    } else {
-      this.idSub = this.id.subscribe((val: number) => {
-        this.team = this.teamDb.getTeam(val);
-      })
+    if (this.id !== undefined) {
+      if (typeof (this.id) === "number") {
+        this.team = this.teamDb.getTeam(this.id);
+      } else {
+        this.idSub = this.id.subscribe((val: number) => {
+          this.team = this.teamDb.getTeam(val);
+        })
+      }
     }
   }
 

@@ -51,7 +51,7 @@
 <div class="container">
     <div *ngFor="let element of round.data">
         <div class="row">
-            <app-swiss-team [id]="element.team1"></app-swiss-team>
+            <app-team-card [id]="element.team1" class="swissTeam"></app-team-card>
             <mat-form-field appearance="fill" color="primary" style="width: 100px;">
                 <mat-label>Score</mat-label>
                 <input matInput type="number" [(ngModel)]="element.team1Wins" (input)="this.checkValid()" min="0"
@@ -62,7 +62,7 @@
                 <input matInput type="number" [(ngModel)]="element.team2Wins" (input)="this.checkValid()" min="0"
                     max="3">
             </mat-form-field>
-            <app-swiss-team [id]="element.team2"></app-swiss-team>
+            <app-team-card [id]="element.team2" class="swissTeam"></app-team-card>
         </div>
         <mat-divider></mat-divider>
 

@@ -10,7 +10,7 @@ import { Team } from '../team.model';
 })
 export class TeamComponent implements OnInit, OnDestroy {
   @Input() id!: Subject<number> | number;
-  team!: Team;
+  @Input() team!: Team;
 
   idSub!: Subscription;
 
@@ -23,13 +23,16 @@ export class TeamComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    if (typeof (this.id) === "number") {
-      this.team = this.teamDb.getTeam(this.id);
-    } else {
-      this.idSub = this.id.subscribe((val: number) => {
-        this.team = this.teamDb.getTeam(val);
-      })
+    if (this.id !== undefined) {
+      if (typeof (this.id) === "number") {
+        this.team = this.teamDb.getTeam(this.id);
+      } else {
+        this.idSub = this.id.subscribe((val: number) => {
+          this.team = this.teamDb.getTeam(val);
+        })
+      }
     }
+
   }
 
 }

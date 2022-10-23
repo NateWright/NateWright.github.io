@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { ByobComponent } from './byob/byob.component';
 import { InputPageComponent } from './input-page/input-page.component';
 
 const routes: Routes = [
@@ -17,6 +18,9 @@ const routes: Routes = [
   }, {
     path: 'groups-to-single-elimination',
     loadChildren: () => import('./groups-to-single/groups-to-single.module').then(m => m.GroupsToSingleModule)
+  }, {
+    path: 'byob',
+    component: ByobComponent
   }
 ];
 

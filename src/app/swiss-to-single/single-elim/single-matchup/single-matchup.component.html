@@ -1,5 +1,5 @@
 <li class="" [ngClass]="top ? 'game game-top' : 'game game-bottom'">
-    <app-swiss-team [id]="team"></app-swiss-team>
+    <app-team-card [id]="team" class="singleTeam"></app-team-card>
     <mat-form-field appearance="fill" color="primary" style="width: 60px;">
         <mat-label>Score</mat-label>
         <input matInput type="number" [(ngModel)]="teamScore" (input)="this.checkWin()" min="0" max="4">

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  dbURL: "https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/dev/"
-  // dbURL: "https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/master/"
+  // dbURL: "https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/dev/"
+  dbURL: "https://raw.githubusercontent.com/NateWright/RocketLeagueWebsiteAssets/master/"
 };
 
 /*

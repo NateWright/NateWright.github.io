@@ -36,12 +36,20 @@ export class TeamDbService {
   async initiateTeamsDb(teams: string[]) {
     this.teams = Array<Team>(16);
     let promises = []
-    for (let t of teams) {
-      promises.push(lastValueFrom(this.http.get<TeamJSON>(environment.dbURL + 'teams/' + t + '.json')))
+    for (let i = 0; i < this.teams.length; i++) {
+      promises.push(lastValueFrom(this.http.get<TeamJSON>(environment.dbURL + 'teams/' + teams[i] + '.json'))
+        .catch(
+          () => {
+            return { team: teams[i], url: 'teamLogos/rocket-league.png' }
+          }
+        )
+      )
     }
     const result = await Promise.all(promises)
     for (let i = 0; i < this.teams.length; i++) {
-      this.teams[i] = new Team(result[i].team, i, result[i].url)
+      const t = result[i]
+
+      this.teams[i] = new Team(t.team, i, t.url)
     }
 
     this.teamsChanged.next();

@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params } from '@angular/router';
-import { lastValueFrom, Subject, Subscription } from 'rxjs';
+import { lastValueFrom, of, Subject, Subscription } from 'rxjs';
 import { ConfirmLeaveComponent } from '../shared/confirm-leave/confirm-leave.component';
 import { SwissTeam } from '../shared/swiss-team.model';
 import { TeamDbService } from '../team-db.service';
@@ -49,6 +49,9 @@ export class SwissToSingleComponent implements OnInit {
   }
 
   async canDeactivate(): Promise<boolean> {
+    if (this.teamsTop16.length === 0) {
+      return true;
+    }
     const dialogRef = this.dialog.open<
       ConfirmLeaveComponent,
       undefined,

@@ -3,83 +3,116 @@
 </mat-toolbar>
 <div class="container">
     <div class="tournament">
-        <ul class="round round-2">
-            <li class="spacer">&nbsp;</li>
+        <div class="final-container">
+            <mat-toolbar>
+                <span class="final-header">Quarterfinals</span>
+            </mat-toolbar>
+            <ul class="round round-2">
+                <li class="spacer">&nbsp;</li>
 
-            <app-single-matchup [top]="1" [team]="this.teams[0]" (teamWon)="updateResults(this.teams[0], match1Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="this.teams[7]" (teamWon)="updateResults(this.teams[7], match1Winner)">
-            </app-single-matchup>
+                <app-single-matchup [top]="1" [team]="this.teams[0]"
+                    (teamWon)="updateResults(this.teams[0], match1Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="this.teams[7]"
+                    (teamWon)="updateResults(this.teams[7], match1Winner)">
+                </app-single-matchup>
 
-            <li class="spacer">&nbsp;</li>
+                <li class="spacer">&nbsp;</li>
 
-            <app-single-matchup [top]="1" [team]="this.teams[3]" (teamWon)="updateResults(this.teams[3], match2Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="this.teams[4]" (teamWon)="updateResults(this.teams[4], match2Winner)">
-            </app-single-matchup>
+                <app-single-matchup [top]="1" [team]="this.teams[3]"
+                    (teamWon)="updateResults(this.teams[3], match2Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="this.teams[4]"
+                    (teamWon)="updateResults(this.teams[4], match2Winner)">
+                </app-single-matchup>
 
-            <li class="spacer">&nbsp;</li>
+                <li class="spacer">&nbsp;</li>
 
-            <app-single-matchup [top]="1" [team]="this.teams[1]" (teamWon)="updateResults(this.teams[1], match3Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="this.teams[6]" (teamWon)="updateResults(this.teams[6], match3Winner)">
-            </app-single-matchup>
+                <app-single-matchup [top]="1" [team]="this.teams[1]"
+                    (teamWon)="updateResults(this.teams[1], match3Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="this.teams[6]"
+                    (teamWon)="updateResults(this.teams[6], match3Winner)">
+                </app-single-matchup>
 
-            <li class="spacer">&nbsp;</li>
+                <li class="spacer">&nbsp;</li>
 
-            <app-single-matchup [top]="1" [team]="this.teams[2]" (teamWon)="updateResults(this.teams[2], match4Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="this.teams[5]" (teamWon)="updateResults(this.teams[5], match4Winner)">
-            </app-single-matchup>
+                <app-single-matchup [top]="1" [team]="this.teams[2]"
+                    (teamWon)="updateResults(this.teams[2], match4Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="this.teams[5]"
+                    (teamWon)="updateResults(this.teams[5], match4Winner)">
+                </app-single-matchup>
 
-            <li class="spacer">&nbsp;</li>
-        </ul>
-        <ul class="round round-3">
-            <li class="spacer">&nbsp;</li>
+                <li class="spacer">&nbsp;</li>
+            </ul>
+        </div>
 
-            <app-single-matchup [top]="1" [team]="match1Winner"
-                (teamWon)="updateResults(match1Winner, round2Match1Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="match2Winner"
-                (teamWon)="updateResults(match2Winner, round2Match1Winner)">
-            </app-single-matchup>
+        <div class="final-container">
+            <mat-toolbar>
+                <span class="final-header">Semifinals</span>
+            </mat-toolbar>
+            <ul class="round round-3">
+                <li class="spacer">&nbsp;</li>
 
-            <li class="spacer">&nbsp;</li>
+                <app-single-matchup [top]="1" [team]="match1Winner"
+                    (teamWon)="updateResults(match1Winner, round2Match1Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="match2Winner"
+                    (teamWon)="updateResults(match2Winner, round2Match1Winner)">
+                </app-single-matchup>
 
-            <app-single-matchup [top]="1" [team]="match3Winner"
-                (teamWon)="updateResults(match3Winner, round2Match2Winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="match4Winner"
-                (teamWon)="updateResults(match4Winner, round2Match2Winner)">
-            </app-single-matchup>
+                <li class="spacer">&nbsp;</li>
 
-            <li class="spacer">&nbsp;</li>
-        </ul>
-        <ul class="round round-4">
-            <li class="spacer">&nbsp;</li>
+                <app-single-matchup [top]="1" [team]="match3Winner"
+                    (teamWon)="updateResults(match3Winner, round2Match2Winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="match4Winner"
+                    (teamWon)="updateResults(match4Winner, round2Match2Winner)">
+                </app-single-matchup>
 
-            <app-single-matchup [top]="1" [team]="round2Match1Winner"
-                (teamWon)="updateResults(round2Match1Winner, winner)">
-            </app-single-matchup>
-            <li class="game game-spacer">&nbsp;</li>
-            <app-single-matchup [top]="0" [team]="round2Match2Winner"
-                (teamWon)="updateResults(round2Match2Winner, winner)">
-            </app-single-matchup>
+                <li class="spacer">&nbsp;</li>
+            </ul>
+        </div>
 
-            <li class="spacer">&nbsp;</li>
-        </ul>
-        <ul class="round round-5">
-            <li class="spacer">&nbsp;</li>
+        <div class="final-container">
+            <mat-toolbar>
+                <span class="final-header">Grand Final</span>
+            </mat-toolbar>
+            <ul class="round round-4">
+                <li class="spacer">&nbsp;</li>
 
-            <app-team-card [id]="winner"></app-team-card>
+                <app-single-matchup [top]="1" [team]="round2Match1Winner"
+                    (teamWon)="updateResults(round2Match1Winner, winner)">
+                </app-single-matchup>
+                <li class="game game-spacer">&nbsp;</li>
+                <app-single-matchup [top]="0" [team]="round2Match2Winner"
+                    (teamWon)="updateResults(round2Match2Winner, winner)">
+                </app-single-matchup>
 
-            <li class="spacer">&nbsp;</li>
-        </ul>
+                <li class="spacer">&nbsp;</li>
+            </ul>
+        </div>
+
+        <div class="final-container">
+            <mat-toolbar>
+                <span class="final-header">Winner</span>
+            </mat-toolbar>
+            <ul class="round round-5">
+
+                <li class="spacer">&nbsp;</li>
+
+                <app-team-card [id]="winner"></app-team-card>
+
+                <li class="spacer">&nbsp;</li>
+            </ul>
+        </div>
+
     </div>
 </div>

@@ -4,7 +4,7 @@ import { SwissToSingleComponent } from './swiss-to-single.component';
 import { SwissStageComponent } from './swiss-stage/swiss-stage.component';
 import { SwissOpponentComponent } from './swiss-stage/swiss-opponent/swiss-opponent.component';
 import { SwissMatchupComponent } from './swiss-stage/swiss-matchup/swiss-matchup.component';
-import { LeaderBoardComponent } from './swiss-stage/leader-board/leader-board.component';
+import { LeaderBoardComponent } from './leader-board/leader-board.component';
 import { SingleElimComponent } from './single-elim/single-elim.component';
 import { SingleMatchupComponent } from './single-elim/single-matchup/single-matchup.component';
 import { MatToolbarModule } from '@angular/material/toolbar';

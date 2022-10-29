@@ -10,7 +10,7 @@ import { TeamDbService } from 'src/app/team-db.service';
 })
 export class LeaderBoardComponent implements OnInit {
   @Input() teams!: MatTableDataSource<SwissTeam>;
-  @Input() displayedColumns: string[] = ['teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
+  @Input() displayedColumns: string[] = ['seed', 'teamName', 'Round 1', 'Round 2', 'Round 3', 'Round 4', 'Round 5']
 
   constructor(public teamDb: TeamDbService) { }
 

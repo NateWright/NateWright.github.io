@@ -219,6 +219,9 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   }
   round5Val(b: boolean) {
     if (b) {
+      for (let t of this.teamsUnsorted) {
+        t.update()
+      }
       this.refreshData();
       let teams: number[] = []
       for (let t of this.teamsSorted.data.slice(0, 8)) {

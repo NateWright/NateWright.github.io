@@ -228,54 +228,151 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     }
   }
 
-  fillTeams(teamsArr: SwissTeam[]): Matchup[] {
-    let swissArr: Matchup[] = [];
-    let func = (teamsArr: SwissTeam[]): Matchup[] | undefined => {
-      if (teamsArr.length < 1) {
-        return [];
+  fillTeams(teams: SwissTeam[]): Matchup[] {
+    let teamsHigh = teams.slice(0, teams.length / 2)
+    let teamsLow = teams.slice(teams.length / 2)
+    let output: Matchup[] | undefined = []
+    for (let i = 0; i < teamsHigh.length - 1; i++) {
+      console.log(i)
+      let high = teamsHigh.slice(0, teamsHigh.length - i).concat(teamsLow.slice(teamsLow.length - i))
+      let low = teamsHigh.slice(teamsHigh.length - i).concat(teamsLow.slice(0, teamsLow.length - i))
+      output = this.fillTeamsRecursive(high, low)
+      if (output !== undefined) {
+        break;
       }
+    }
 
-      let team1Index = teamsArr[0].teamIndex;
-
-      for (var i = 0; i < teamsArr.length - 1; i++) {
-        let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
-
-        if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
-
-        let arr = func(teamsArr.slice(1, teamsArr.length - 1 - i).concat(teamsArr.slice(teamsArr.length - i)))
-
-        if (arr === undefined) { continue; }
-
-        let temp = [new Matchup(team1Index, team2Index)]
-        temp.push(...arr);
-        return temp;
+    if (output === undefined) {
+      output = []
+      console.log("matchups undefined")
+      for (let i = 0; i < teamsHigh.length; i++) {
+        let team1Index = teamsHigh[i].teamIndex;
+        let team2Index = teamsLow[teamsLow.length - 1 - i].teamIndex;
+        let match = new Matchup(team1Index, team2Index)
+        output.push(match);
+        this.teamsUnsorted[team1Index].swissMatchup.push(match);
+        this.teamsUnsorted[team2Index].swissMatchup.push(match);
       }
+    }
+    for (let match of output) {
+      let team1Index = match.team1;
+      let team2Index = match.team2;
+
+      this.teamsUnsorted[team1Index].swissMatchup.push(match);
+      this.teamsUnsorted[team2Index].swissMatchup.push(match);
+    }
+    return output;
+  }
+
+  fillTeamsRecursive(teamsHigh: SwissTeam[], teamsLow: SwissTeam[]): Matchup[] | undefined {
+    if (teamsLow.length < 1) {
+      return [];
+    }
+    let output: Matchup[] = []
+    let team1Index = teamsLow[teamsLow.length - 1].teamIndex
+    for (let i = 0; i < teamsHigh.length; i++) {
+      let team2Index = teamsHigh[i].teamIndex;
+
+      if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
+
+      let newHigh = teamsHigh.slice()
+      newHigh.splice(i, 1)
+      let arr = this.fillTeamsRecursive(newHigh, teamsLow.slice(0, teamsLow.length - 1))
+
+      if (arr === undefined) { console.log(undefined); continue; }
+      output = [(new Matchup(team2Index, team1Index))]
+      output.push(...arr)
+      break;
+    }
+    if (output.length < 1) {
       return undefined;
     }
+    // console.log(output)
+    // for (let highIndex = 0; highIndex < teamsHigh.length; highIndex++) {
+    //   let team1Index = teamsHigh[highIndex].teamIndex
+    //   for (let i = 0; i < teamsLow.length; i++) {
+    //     let team2Index = teamsLow[teamsLow.length - 1 - i].teamIndex;
 
-    let matchups = func(teamsArr);
+    //     if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) === undefined) {
+    //       output.push(new Matchup(team1Index, team2Index))
+    //       teamsLow.splice(teamsLow.length - 1 - i, 1)
+    //       break;
+    //     }
 
-    if (matchups === undefined) {
-      console.log("matchups undefined")
-      for (var i = 0; i < teamsArr.length / 2; i++) {
-        let team1Index = teamsArr[i].teamIndex;
-        let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
-        let match = new Matchup(team1Index, team2Index)
-        swissArr[i] = match;
-        this.teamsUnsorted[team1Index].swissMatchup.push(match);
-        this.teamsUnsorted[team2Index].swissMatchup.push(match);
+    //   }
+    //   if (output.length !== highIndex + 1) {
+    //     return undefined;
+    //   }
+    // }
+
+    if (output.length !== (teamsHigh.length + teamsLow.length) / 2) {
+      let available: number[] = [];
+      for (let t of teamsHigh) {
+        available.push(t.teamIndex)
       }
-    } else {
-      swissArr = matchups
-      for (let match of swissArr) {
-        let team1Index = match.team1;
-        let team2Index = match.team2;
-
-        this.teamsUnsorted[team1Index].swissMatchup.push(match);
-        this.teamsUnsorted[team2Index].swissMatchup.push(match);
+      for (let t of teamsLow) {
+        available.push(t.teamIndex)
       }
+      for (let m of output) {
+        let i = available.indexOf(m.team1)
+        available.splice(i, 1)
+        i = available.indexOf(m.team2)
+        available.splice(i, 1)
+      }
+      output.push(new Matchup(available[0], available[1]))
     }
-    return swissArr;
 
+    return output;
   }
+
+  // fillTeams(teamsArr: SwissTeam[]): Matchup[] {
+  //   let swissArr: Matchup[] = [];
+  //   let func = (teamsArr: SwissTeam[]): Matchup[] | undefined => {
+  //     if (teamsArr.length < 1) {
+  //       return [];
+  //     }
+
+  //     let team1Index = teamsArr[0].teamIndex;
+
+  //     for (var i = 0; i < teamsArr.length - 1; i++) {
+  //       let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
+
+  //       if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
+
+  //       let arr = func(teamsArr.slice(1, teamsArr.length - 1 - i).concat(teamsArr.slice(teamsArr.length - i)))
+
+  //       if (arr === undefined) { continue; }
+
+  //       let temp = [new Matchup(team1Index, team2Index)]
+  //       temp.push(...arr);
+  //       return temp;
+  //     }
+  //     return undefined;
+  //   }
+
+  //   let matchups = func(teamsArr);
+
+  //   if (matchups === undefined) {
+  //     console.log("matchups undefined")
+  //     for (var i = 0; i < teamsArr.length / 2; i++) {
+  //       let team1Index = teamsArr[i].teamIndex;
+  //       let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
+  //       let match = new Matchup(team1Index, team2Index)
+  //       swissArr[i] = match;
+  //       this.teamsUnsorted[team1Index].swissMatchup.push(match);
+  //       this.teamsUnsorted[team2Index].swissMatchup.push(match);
+  //     }
+  //   } else {
+  //     swissArr = matchups
+  //     for (let match of swissArr) {
+  //       let team1Index = match.team1;
+  //       let team2Index = match.team2;
+
+  //       this.teamsUnsorted[team1Index].swissMatchup.push(match);
+  //       this.teamsUnsorted[team2Index].swissMatchup.push(match);
+  //     }
+  //   }
+  //   return swissArr;
+
+  // }
 }

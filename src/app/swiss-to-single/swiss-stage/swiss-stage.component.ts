@@ -62,7 +62,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
   }
 
   initiateBracket() {
-    this.round1.data = this.fillTeams(this.teamsUnsorted)
+    this.round1.data = this.fillTeamsBasic(this.teamsUnsorted)
   }
 
   generateRound2() {
@@ -82,8 +82,8 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     teamsHigh.sort(SwissTeam.sortFunctionSwissRound)
     teamsLow.sort(SwissTeam.sortFunctionSwissRound)
 
-    this.round2High.data = this.fillTeams(teamsHigh);
-    this.round2Low.data = this.fillTeams(teamsLow);
+    this.round2High.data = this.fillTeamsBasic(teamsHigh);
+    this.round2Low.data = this.fillTeamsBasic(teamsLow);
     this.refreshData()
   }
 
@@ -131,9 +131,9 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     teamsMid.sort(SwissTeam.sortFunctionSwissRound)
     teamsLow.sort(SwissTeam.sortFunctionSwissRound)
 
-    this.round3High.data = this.fillTeams(teamsHigh)
-    this.round3Mid.data = this.fillTeams(teamsMid)
-    this.round3Low.data = this.fillTeams(teamsLow)
+    this.round3High.data = this.fillTeamsBasic(teamsHigh)
+    this.round3Mid.data = this.fillTeams(teamsMid, 4, 4)
+    this.round3Low.data = this.fillTeamsBasic(teamsLow)
   }
 
   round3H(b: boolean) {
@@ -180,8 +180,8 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     teamsHigh.sort(SwissTeam.sortFunctionSwissRound)
     teamsLow.sort(SwissTeam.sortFunctionSwissRound)
 
-    this.round4High.data = this.fillTeams(teamsHigh)
-    this.round4Low.data = this.fillTeams(teamsLow)
+    this.round4High.data = this.fillTeams(teamsHigh, 2, 4)
+    this.round4Low.data = this.fillTeams(teamsLow, 4, 2)
   }
   round4H(b: boolean) {
     this.round4HighValid = b;
@@ -215,7 +215,7 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     }
     teams.sort(SwissTeam.sortFunctionSwissRound)
 
-    this.round5.data = this.fillTeams(teams)
+    this.round5.data = this.fillTeams(teams, 3, 3)
   }
   round5Val(b: boolean) {
     if (b) {
@@ -230,152 +230,667 @@ export class SwissStageComponent implements OnInit, OnDestroy {
       this.teamsTop8.next(teams)
     }
   }
-
-  fillTeams(teams: SwissTeam[]): Matchup[] {
-    let teamsHigh = teams.slice(0, teams.length / 2)
-    let teamsLow = teams.slice(teams.length / 2)
-    let output: Matchup[] | undefined = []
-    for (let i = 0; i < teamsHigh.length - 1; i++) {
-      console.log(i)
-      let high = teamsHigh.slice(0, teamsHigh.length - i).concat(teamsLow.slice(teamsLow.length - i))
-      let low = teamsHigh.slice(teamsHigh.length - i).concat(teamsLow.slice(0, teamsLow.length - i))
-      output = this.fillTeamsRecursive(high, low)
-      if (output !== undefined) {
-        break;
-      }
-    }
-
-    if (output === undefined) {
-      output = []
-      console.log("matchups undefined")
-      for (let i = 0; i < teamsHigh.length; i++) {
-        let team1Index = teamsHigh[i].teamIndex;
-        let team2Index = teamsLow[teamsLow.length - 1 - i].teamIndex;
-        let match = new Matchup(team1Index, team2Index)
-        output.push(match);
-        this.teamsUnsorted[team1Index].swissMatchup.push(match);
-        this.teamsUnsorted[team2Index].swissMatchup.push(match);
-      }
-    }
-    for (let match of output) {
-      let team1Index = match.team1;
-      let team2Index = match.team2;
-
+  fillTeamsBasic(teams: SwissTeam[]): Matchup[] {
+    let output: Matchup[] = []
+    for (var i = 0; i < teams.length / 2; i++) {
+      let team1Index = teams[i].teamIndex;
+      let team2Index = teams[teams.length - 1 - i].teamIndex;
+      let match = new Matchup(team1Index, team2Index)
+      output.push(match);
       this.teamsUnsorted[team1Index].swissMatchup.push(match);
       this.teamsUnsorted[team2Index].swissMatchup.push(match);
     }
     return output;
   }
 
-  fillTeamsRecursive(teamsHigh: SwissTeam[], teamsLow: SwissTeam[]): Matchup[] | undefined {
-    if (teamsLow.length < 1) {
-      return [];
-    }
+  fillTeams(teams: SwissTeam[], high: number, low: number): Matchup[] {
     let output: Matchup[] = []
-    let team1Index = teamsLow[teamsLow.length - 1].teamIndex
-    for (let i = 0; i < teamsHigh.length; i++) {
-      let team2Index = teamsHigh[i].teamIndex;
 
-      if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
+    if (high === 4 && low === 4) {
 
-      let newHigh = teamsHigh.slice()
-      newHigh.splice(i, 1)
-      let arr = this.fillTeamsRecursive(newHigh, teamsLow.slice(0, teamsLow.length - 1))
+      let m = swiss_4_4.find(
+        (matchups) => {
+          for (let arr of matchups.matchups) {
+            if (this.teamsUnsorted[teams[arr[0] - 1].teamIndex].teamBlacklist.find((element) => { return element == teams[arr[1] - 1].teamIndex }) !== undefined) {
+              return undefined;
+            }
+          }
+          return matchups
+        }
+      )
+      if (m) {
+        for (let arr of m.matchups) {
+          let team1Index = teams[arr[0] - 1].teamIndex
+          let team2Index = teams[arr[1] - 1].teamIndex
+          let newMatch = new Matchup(team1Index, team2Index)
 
-      if (arr === undefined) { console.log(undefined); continue; }
-      output = [(new Matchup(team2Index, team1Index))]
-      output.push(...arr)
-      break;
-    }
-    if (output.length < 1) {
-      return undefined;
-    }
-    // console.log(output)
-    // for (let highIndex = 0; highIndex < teamsHigh.length; highIndex++) {
-    //   let team1Index = teamsHigh[highIndex].teamIndex
-    //   for (let i = 0; i < teamsLow.length; i++) {
-    //     let team2Index = teamsLow[teamsLow.length - 1 - i].teamIndex;
-
-    //     if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) === undefined) {
-    //       output.push(new Matchup(team1Index, team2Index))
-    //       teamsLow.splice(teamsLow.length - 1 - i, 1)
-    //       break;
-    //     }
-
-    //   }
-    //   if (output.length !== highIndex + 1) {
-    //     return undefined;
-    //   }
-    // }
-
-    if (output.length !== (teamsHigh.length + teamsLow.length) / 2) {
-      let available: number[] = [];
-      for (let t of teamsHigh) {
-        available.push(t.teamIndex)
+          output.push(newMatch)
+          this.teamsUnsorted[team1Index].swissMatchup.push(newMatch);
+          this.teamsUnsorted[team2Index].swissMatchup.push(newMatch);
+        }
       }
-      for (let t of teamsLow) {
-        available.push(t.teamIndex)
-      }
-      for (let m of output) {
-        let i = available.indexOf(m.team1)
-        available.splice(i, 1)
-        i = available.indexOf(m.team2)
-        available.splice(i, 1)
-      }
-      output.push(new Matchup(available[0], available[1]))
+      return output;
+
+    } else if (high === 4 && low === 2) {
+      return this.searchFunction(swiss_4_2, teams);
+
+    } else if (high === 3 && low === 3) {
+      return this.searchFunction(swiss_3_3, teams);
+
+    } else if (high === 2 && low === 4) {
+      return this.searchFunction(swiss_2_4, teams);;
+
     }
 
     return output;
   }
 
-  // fillTeams(teamsArr: SwissTeam[]): Matchup[] {
-  //   let swissArr: Matchup[] = [];
-  //   let func = (teamsArr: SwissTeam[]): Matchup[] | undefined => {
-  //     if (teamsArr.length < 1) {
-  //       return [];
-  //     }
+  searchFunction(swiss: { matchups: [[number, number], [number, number], [number, number]] }[], teams: SwissTeam[]) {
+    let output: Matchup[] = []
+    let m = swiss.find(
+      (matchups) => {
+        console.log(matchups)
+        for (let arr of matchups.matchups) {
+          if (this.teamsUnsorted[teams[arr[0] - 1].teamIndex].teamBlacklist.find(
+            (element) => { return element == teams[arr[1] - 1].teamIndex }) !== undefined) {
+            return undefined;
+          }
+        }
+        return matchups
+      }
+    )
+    if (m) {
+      for (let arr of m.matchups) {
+        let team1Index = teams[arr[0] - 1].teamIndex
+        let team2Index = teams[arr[1] - 1].teamIndex
+        let newMatch = new Matchup(team1Index, team2Index)
 
-  //     let team1Index = teamsArr[0].teamIndex;
-
-  //     for (var i = 0; i < teamsArr.length - 1; i++) {
-  //       let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
-
-  //       if (this.teamsUnsorted[team2Index].teamBlacklist.find((element) => { return element == team1Index }) !== undefined) { continue; }
-
-  //       let arr = func(teamsArr.slice(1, teamsArr.length - 1 - i).concat(teamsArr.slice(teamsArr.length - i)))
-
-  //       if (arr === undefined) { continue; }
-
-  //       let temp = [new Matchup(team1Index, team2Index)]
-  //       temp.push(...arr);
-  //       return temp;
-  //     }
-  //     return undefined;
-  //   }
-
-  //   let matchups = func(teamsArr);
-
-  //   if (matchups === undefined) {
-  //     console.log("matchups undefined")
-  //     for (var i = 0; i < teamsArr.length / 2; i++) {
-  //       let team1Index = teamsArr[i].teamIndex;
-  //       let team2Index = teamsArr[teamsArr.length - 1 - i].teamIndex;
-  //       let match = new Matchup(team1Index, team2Index)
-  //       swissArr[i] = match;
-  //       this.teamsUnsorted[team1Index].swissMatchup.push(match);
-  //       this.teamsUnsorted[team2Index].swissMatchup.push(match);
-  //     }
-  //   } else {
-  //     swissArr = matchups
-  //     for (let match of swissArr) {
-  //       let team1Index = match.team1;
-  //       let team2Index = match.team2;
-
-  //       this.teamsUnsorted[team1Index].swissMatchup.push(match);
-  //       this.teamsUnsorted[team2Index].swissMatchup.push(match);
-  //     }
-  //   }
-  //   return swissArr;
-
-  // }
+        output.push(newMatch)
+        this.teamsUnsorted[team1Index].swissMatchup.push(newMatch);
+        this.teamsUnsorted[team2Index].swissMatchup.push(newMatch);
+      }
+    }
+    return output;
+  }
 }
+
+let swiss_4_4: { matchups: [[number, number], [number, number], [number, number], [number, number]] }[]
+  = [
+    {
+      matchups: [
+        [1, 8], [2, 7], [3, 6], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 7], [3, 5], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 6], [3, 7], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 6], [3, 5], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 5], [3, 7], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 5], [3, 6], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 8], [3, 6], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 8], [3, 5], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 6], [3, 8], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 6], [3, 5], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 5], [3, 8], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 5], [3, 6], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 8], [3, 7], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 8], [3, 5], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 7], [3, 8], [4, 5]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 7], [3, 5], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 5], [3, 8], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 5], [3, 7], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 8], [3, 7], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 8], [3, 6], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 7], [3, 8], [4, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 7], [3, 6], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 6], [3, 8], [4, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 6], [3, 7], [4, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 7], [3, 4], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 6], [3, 4], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 5], [3, 4], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 4], [3, 7], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 4], [3, 6], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 4], [3, 5], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 3], [4, 7], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 3], [4, 6], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 8], [2, 3], [4, 5], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 8], [3, 4], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 6], [3, 4], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 5], [3, 4], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 4], [3, 8], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 4], [3, 6], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 4], [3, 5], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 3], [4, 8], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 7], [2, 3], [4, 6], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 8], [3, 4], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 7], [3, 4], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 5], [3, 4], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 4], [3, 8], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 4], [3, 7], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 4], [3, 5], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 3], [4, 8], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 6], [2, 3], [4, 7], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 8], [3, 4], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 7], [3, 4], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 6], [3, 4], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 4], [3, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 4], [3, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 4], [3, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 3], [4, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 5], [2, 3], [4, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 8], [3, 7], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 8], [3, 6], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 8], [3, 5], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 7], [3, 8], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 7], [3, 6], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 7], [3, 5], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 6], [3, 8], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 6], [3, 7], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 5], [3, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 5], [3, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 5], [3, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 3], [5, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 3], [5, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 4], [2, 3], [5, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 8], [4, 7], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 8], [4, 6], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 8], [4, 5], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 7], [4, 8], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 7], [4, 6], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 7], [4, 5], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 6], [4, 8], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 6], [4, 7], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 6], [4, 5], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 5], [4, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 5], [4, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 5], [4, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 4], [5, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 4], [5, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 3], [2, 4], [5, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 8], [4, 7], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 8], [4, 6], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 8], [4, 5], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 7], [4, 8], [5, 6]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 7], [4, 6], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 7], [4, 5], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 6], [4, 8], [5, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 6], [4, 7], [5, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 5], [4, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 5], [4, 7], [6, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 5], [4, 6], [7, 8]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 4], [5, 8], [6, 7]
+      ]
+    }, {
+      matchups: [
+        [1, 2], [3, 4], [5, 7], [6, 8]
+      ]
+    }
+  ]
+
+let swiss_2_4: { matchups: [[number, number], [number, number], [number, number]] }[] = [
+  {
+    matchups: [
+      [1, 6], [2, 5], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [2, 4], [3, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [2, 3], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 6], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 4], [3, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 3], [4, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 6], [3, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 5], [3, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 3], [5, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 6], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 5], [4, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 4], [5, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 2], [3, 6], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 2], [3, 5], [4, 6]
+    ]
+  }
+]
+
+let swiss_4_2: { matchups: [[number, number], [number, number], [number, number]] }[] = [
+  {
+    matchups: [
+      [1, 6], [2, 5], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [3, 5], [2, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [4, 5], [2, 3]
+    ]
+  }, {
+    matchups: [
+      [2, 6], [1, 5], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [2, 6], [3, 5], [1, 4]
+    ]
+  }, {
+    matchups: [
+      [2, 6], [4, 5], [1, 3]
+    ]
+  }, {
+    matchups: [
+      [3, 6], [1, 5], [2, 4]
+    ]
+  }, {
+    matchups: [
+      [3, 6], [2, 5], [1, 4]
+    ]
+  }, {
+    matchups: [
+      [3, 6], [4, 5], [1, 2]
+    ]
+  }, {
+    matchups: [
+      [4, 6], [1, 5], [2, 3]
+    ]
+  }, {
+    matchups: [
+      [4, 6], [2, 5], [1, 3]
+    ]
+  }, {
+    matchups: [
+      [4, 6], [3, 5], [1, 2]
+    ]
+  }, {
+    matchups: [
+      [5, 6], [1, 4], [2, 3]
+    ]
+  }, {
+    matchups: [
+      [5, 6], [2, 4], [1, 3]
+    ]
+  }
+]
+
+let swiss_3_3: { matchups: [[number, number], [number, number], [number, number]] }[] = [
+  {
+    matchups: [
+      [1, 6], [2, 5], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [2, 4], [3, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 6], [3, 4]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 4], [3, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 6], [3, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 5], [3, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 6], [2, 3], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 5], [2, 3], [4, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 4], [2, 3], [5, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 6], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 5], [4, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 3], [2, 4], [5, 6]
+    ]
+  }, {
+    matchups: [
+      [1, 2], [3, 6], [4, 5]
+    ]
+  }, {
+    matchups: [
+      [1, 2], [3, 5], [4, 6]
+    ]
+  }
+]

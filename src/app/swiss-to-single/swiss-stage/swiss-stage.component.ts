@@ -289,7 +289,6 @@ export class SwissStageComponent implements OnInit, OnDestroy {
     let output: Matchup[] = []
     let m = swiss.find(
       (matchups) => {
-        console.log(matchups)
         for (let arr of matchups.matchups) {
           if (this.teamsUnsorted[teams[arr[0] - 1].teamIndex].teamBlacklist.find(
             (element) => { return element == teams[arr[1] - 1].teamIndex }) !== undefined) {

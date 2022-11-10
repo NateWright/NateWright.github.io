@@ -33,6 +33,9 @@
 
 .swissHolder {
     width: 80%;
+    @media only screen and (max-width: 1200px) {
+        width: 100%;
+    }
 }
 
 .round3 {

@@ -9,7 +9,7 @@
 //     height: 25px;
 // }
 
-.container {
+.matchupContainer {
     display: flex;
     justify-content: center;
 }
@@ -17,13 +17,10 @@
 .swiss-container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 @media only screen and (max-width: 1600px) {
-    .swiss-container {
-        flex-direction: column;
-    }
-
     .round3 {
         flex-direction: column;
 
@@ -32,7 +29,7 @@
 }
 
 .swissHolder {
-    width: 80%;
+    width: 100%;
 }
 
 .round3 {

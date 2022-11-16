@@ -45,7 +45,7 @@ import { ByobComponent } from './byob/byob.component';
     MatPaginatorModule,
     DragDropModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

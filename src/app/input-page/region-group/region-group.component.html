@@ -1,0 +1,10 @@
+<mat-toolbar>
+    {{ regionName }}
+</mat-toolbar>
+<div class="container-fluid">
+    <div class="d-flex flex-row flex-nowrap overflow-auto">
+        <app-regional-card *ngFor="let event of events" [url]="event.csvURL" [regionalName]="event.regionalName"
+            [format]="event.format" (click)="initiateTeams(event.format, $event)">
+        </app-regional-card>
+    </div>
+</div>

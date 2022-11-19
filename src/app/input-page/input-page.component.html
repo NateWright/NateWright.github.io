@@ -1,26 +1,7 @@
-<div>
-    <mat-toolbar>
-        North America
-    </mat-toolbar>
-    <div class="inputContainer mt-2">
-        <app-regional-card *ngFor="let event of naEvents" [url]="event.csvURL" [regionalName]="event.regionalName"
-            [format]="event.format" (click)="initiateTeams($event)">
-        </app-regional-card>
-    </div>
-
-</div>
-<div style="padding-top: 10px;">
-    <mat-toolbar>
-        Europe
-    </mat-toolbar>
-    <div class="inputContainer mt-2">
-        <app-regional-card *ngFor="let event of euEvents" [url]="event.csvURL" [regionalName]="event.regionalName"
-            [format]="event.format" (click)="initiateTeams($event)">
-        </app-regional-card>
-    </div>
-</div>
-<span></span>
-<div style="padding-top: 10px;">
+<app-region-group regionName="North America" [events]="naEvents"></app-region-group>
+<app-region-group regionName="Europe" [events]="euEvents"></app-region-group>
+<app-region-group regionName="World Championship" [events]="wcEvents"></app-region-group>
+<div class="pt-2">
     <mat-toolbar color="accent">
         Build your own Bracket
     </mat-toolbar>

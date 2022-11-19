@@ -21,6 +21,7 @@ import { RegionalCardComponent } from './input-page/regional-card/regional-card.
 import { CreateBracketComponent } from './create-bracket/create-bracket.component';
 import { SharedModule } from './shared/shared.module';
 import { ByobComponent } from './byob/byob.component';
+import { RegionGroupComponent } from './input-page/region-group/region-group.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ByobComponent } from './byob/byob.component';
     RegionalCardComponent,
     CreateBracketComponent,
     ByobComponent,
+    RegionGroupComponent,
   ],
   imports: [
     BrowserModule,

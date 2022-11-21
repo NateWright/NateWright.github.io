@@ -21,6 +21,18 @@ export class SingleElimComponent implements OnInit, OnDestroy {
 
   winner = new ReplaySubject<number>();
 
+  quartersArr: { team1: number, team2: number, winner: ReplaySubject<number> }[] = [
+    { team1: 0, team2: 7, winner: this.match1Winner },
+    { team1: 3, team2: 4, winner: this.match2Winner },
+    { team1: 1, team2: 6, winner: this.match3Winner },
+    { team1: 2, team2: 5, winner: this.match4Winner }
+  ]
+
+  semiArr: { team1: ReplaySubject<number>, team2: ReplaySubject<number>, winner: ReplaySubject<number> }[] = [
+    { team1: this.match1Winner, team2: this.match2Winner, winner: this.round2Match1Winner },
+    { team1: this.match3Winner, team2: this.match4Winner, winner: this.round2Match2Winner }
+  ]
+
   constructor() {
     for (let i = 0; i < 8; i++) {
       this.teams[i] = new ReplaySubject<number>()

@@ -1,7 +1,11 @@
-<li class="" [ngClass]="top ? 'game game-top' : 'game game-bottom'">
-    <app-team-card [id]="team" class="singleTeam"></app-team-card>
-    <mat-form-field appearance="fill" color="primary" style="width: 60px;">
+<div class="row">
+    <mat-form-field appearance="fill" color="primary" class="col-4" *ngIf="left">
         <mat-label>Score</mat-label>
         <input matInput type="number" [(ngModel)]="teamScore" (input)="this.checkWin()" min="0" max="4">
     </mat-form-field>
-</li>
+    <app-team-card [id]="team" class="col-8"></app-team-card>
+    <mat-form-field appearance="fill" color="primary" class="col-4" *ngIf="!left">
+        <mat-label>Score</mat-label>
+        <input matInput type="number" [(ngModel)]="teamScore" (input)="this.checkWin()" min="0" max="4">
+    </mat-form-field>
+</div>

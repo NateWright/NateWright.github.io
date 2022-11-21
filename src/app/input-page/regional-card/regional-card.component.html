@@ -1,10 +1,8 @@
-<button mat-button class="card">
-    <mat-card mat-button (click)="click.next(url)" routerLink="{{ format }}">
-        <mat-card-header>
-            <mat-card-title>{{ regionalName }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            Click Here to Begin
-        </mat-card-content>
-    </mat-card>
-</button>
+<mat-card (click)="click.next(url)" class="clickable m-1">
+    <mat-card-header>
+        <mat-card-title>{{ regionalName }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        Click Here to Begin
+    </mat-card-content>
+</mat-card>

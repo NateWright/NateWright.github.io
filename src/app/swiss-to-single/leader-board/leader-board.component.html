@@ -1,54 +1,56 @@
-<table mat-table [dataSource]="teams">
-    <ng-container matColumnDef="seed">
-        <th mat-header-cell *matHeaderCellDef>Seed</th>
-        <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
-    </ng-container>
-    <ng-container matColumnDef="teamName">
-        <th mat-header-cell *matHeaderCellDef>Team Name</th>
-        <td mat-cell *matCellDef="let element">
-            <app-team [id]="element.teamIndex"></app-team>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="Round 1">
-        <th mat-header-cell *matHeaderCellDef>Round 1</th>
-        <td mat-cell *matCellDef="let element">
-            <app-swiss-opponent [teamIndex]="element.teamIndex" [matchup]="element.swissMatchup[0]">
-            </app-swiss-opponent>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="Round 2">
-        <th mat-header-cell *matHeaderCellDef>Round 2</th>
-        <td mat-cell *matCellDef="let element">
-            <app-swiss-opponent *ngIf="element.swissMatchup[1]" [teamIndex]="element.teamIndex"
-                [matchup]="element.swissMatchup[1]">
-            </app-swiss-opponent>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="Round 3">
-        <th mat-header-cell *matHeaderCellDef>Round 3</th>
-        <td mat-cell *matCellDef="let element">
-            <app-swiss-opponent *ngIf="element.swissMatchup[2]" [teamIndex]="element.teamIndex"
-                [matchup]="element.swissMatchup[2]">
-            </app-swiss-opponent>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="Round 4">
-        <th mat-header-cell *matHeaderCellDef>Round 4</th>
-        <td mat-cell *matCellDef="let element">
-            <app-swiss-opponent *ngIf="element.swissMatchup[3]" [teamIndex]="element.teamIndex"
-                [matchup]="element.swissMatchup[3]">
-            </app-swiss-opponent>
-        </td>
-    </ng-container>
-    <ng-container matColumnDef="Round 5">
-        <th mat-header-cell *matHeaderCellDef>Round 5</th>
-        <td mat-cell *matCellDef="let element">
-            <app-swiss-opponent *ngIf="element.swissMatchup[4]" [teamIndex]="element.teamIndex"
-                [matchup]="element.swissMatchup[4]">
-            </app-swiss-opponent>
-        </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef=" displayedColumns">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div class="table-responsive">
+    <table mat-table [dataSource]="teams">
+        <ng-container matColumnDef="seed">
+            <th mat-header-cell *matHeaderCellDef>Seed</th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </td>
+        </ng-container>
+        <ng-container matColumnDef="teamName">
+            <th mat-header-cell *matHeaderCellDef>Team Name</th>
+            <td mat-cell *matCellDef="let element">
+                <app-team [id]="element.teamIndex"></app-team>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Round 1">
+            <th mat-header-cell *matHeaderCellDef>Round 1</th>
+            <td mat-cell *matCellDef="let element">
+                <app-swiss-opponent [teamIndex]="element.teamIndex" [matchup]="element.swissMatchup[0]">
+                </app-swiss-opponent>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Round 2">
+            <th mat-header-cell *matHeaderCellDef>Round 2</th>
+            <td mat-cell *matCellDef="let element">
+                <app-swiss-opponent *ngIf="element.swissMatchup[1]" [teamIndex]="element.teamIndex"
+                    [matchup]="element.swissMatchup[1]">
+                </app-swiss-opponent>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Round 3">
+            <th mat-header-cell *matHeaderCellDef>Round 3</th>
+            <td mat-cell *matCellDef="let element">
+                <app-swiss-opponent *ngIf="element.swissMatchup[2]" [teamIndex]="element.teamIndex"
+                    [matchup]="element.swissMatchup[2]">
+                </app-swiss-opponent>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Round 4">
+            <th mat-header-cell *matHeaderCellDef>Round 4</th>
+            <td mat-cell *matCellDef="let element">
+                <app-swiss-opponent *ngIf="element.swissMatchup[3]" [teamIndex]="element.teamIndex"
+                    [matchup]="element.swissMatchup[3]">
+                </app-swiss-opponent>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Round 5">
+            <th mat-header-cell *matHeaderCellDef>Round 5</th>
+            <td mat-cell *matCellDef="let element">
+                <app-swiss-opponent *ngIf="element.swissMatchup[4]" [teamIndex]="element.teamIndex"
+                    [matchup]="element.swissMatchup[4]">
+                </app-swiss-opponent>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef=" displayedColumns">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

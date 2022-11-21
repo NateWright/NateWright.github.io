@@ -1,123 +1,92 @@
 <mat-toolbar>
     Swiss Stage
 </mat-toolbar>
-<div class="container">
-    <div class="swissHolder">
-        <mat-toolbar>
-            Round 1
-        </mat-toolbar>
-        <!-- Round 1 -->
+<div class="container p-0">
+    <mat-toolbar>
+        Round 1
+    </mat-toolbar>
+    <!-- Round 1 -->
+    <div>
         <mat-card>
-            <app-swiss-matchup [round]="round1" (isValid)="initiateRound2($event)" (tableUpdate)="refreshData()"
-                style="width: 100%;"></app-swiss-matchup>
+            <app-swiss-matchup [round]="round1" (isValid)="initiateRound2($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
         </mat-card>
-
-
-        <!-- Round 2 -->
-        <mat-toolbar>
-            Round 2
-        </mat-toolbar>
-        <div class="swiss-container">
-            <div class="matchup-table" style="flex-grow: 1;">
-                <mat-card>
-                    <mat-card-title>High</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round2High" (isValid)="round2H($event)"
-                            (tableUpdate)="refreshData()" style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="matchup-table" style="flex-grow: 1;">
-                <mat-card>
-                    <mat-card-title>Low</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round2Low" (isValid)="round2L($event)" (tableUpdate)="refreshData()"
-                            style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
-        <!-- Round 3 -->
-        <mat-toolbar>
-            Round 3
-        </mat-toolbar>
-        <div class="round3">
-            <div class="matchup-table round3Item">
-                <mat-card>
-                    <mat-card-title>High</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round3High" (isValid)="round3H($event)"
-                            (tableUpdate)="refreshData()" style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="matchup-table round3Item">
-                <mat-card>
-                    <mat-card-title>Low</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round3Low" (isValid)="round3L($event)" (tableUpdate)="refreshData()"
-                            style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="matchup-table round3Item">
-                <mat-card>
-                    <mat-card-title>Mid</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round3Mid" (isValid)="round3M($event)" (tableUpdate)="refreshData()"
-                            style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
-
-        <!-- Round 4 -->
-        <mat-toolbar>
-            Round 4
-        </mat-toolbar>
-        <div class="swiss-container">
-            <div class="matchup-table" style="flex-grow: 1;">
-                <mat-card>
-                    <mat-card-title>High</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round4High" (isValid)="round4H($event)"
-                            (tableUpdate)="refreshData()" style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-            <div class="matchup-table" style="flex-grow: 1;">
-                <mat-card>
-                    <mat-card-title>Low</mat-card-title>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round4Low" (isValid)="round4L($event)" (tableUpdate)="refreshData()"
-                            style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-
-            </div>
-        </div>
-        <!-- Round 2 -->
-        <mat-toolbar>
-            Round 5
-        </mat-toolbar>
-        <div class="container">
-            <div class="matchup-table" style="flex-grow: 1;">
-                <mat-card>
-                    <mat-card-content>
-                        <app-swiss-matchup [round]="round5" (isValid)="this.round5Val($event)"
-                            (tableUpdate)="refreshData()" style="width: 100%;">
-                        </app-swiss-matchup>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
     </div>
+
+    <!-- Round 2 -->
+    <mat-toolbar>
+        Round 2
+    </mat-toolbar>
+    <div>
+        <mat-card>
+            <mat-card-title>High</mat-card-title>
+            <mat-card-content>
+                <app-swiss-matchup [round]="round2High" (isValid)="round2H($event)" (tableUpdate)="refreshData()">
+                </app-swiss-matchup>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-title>Low</mat-card-title>
+            <mat-card-content>
+                <app-swiss-matchup [round]="round2Low" (isValid)="round2L($event)" (tableUpdate)="refreshData()">
+                </app-swiss-matchup>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- Round 3 -->
+    <mat-toolbar>
+        Round 3
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-title>High</mat-card-title>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round3High" (isValid)="round3H($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Low</mat-card-title>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round3Low" (isValid)="round3L($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Mid</mat-card-title>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round3Mid" (isValid)="round3M($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Round 4 -->
+    <mat-toolbar>
+        Round 4
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-title>High</mat-card-title>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round4High" (isValid)="round4H($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title>Low</mat-card-title>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round4Low" (isValid)="round4L($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- Round 2 -->
+    <mat-toolbar>
+        Round 5
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-content>
+            <app-swiss-matchup [round]="round5" (isValid)="this.round5Val($event)" (tableUpdate)="refreshData()">
+            </app-swiss-matchup>
+        </mat-card-content>
+    </mat-card>
 
 </div>

@@ -1,57 +1,57 @@
-.teamContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-mat-form-field {
-    width: 50px;
-}
-
-.round .game-spacer {
-    flex-grow: 1;
-}
-
-li {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-// li.game {
-//     padding-left: 20px;
+// .teamContainer {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: center;
+//     align-items: center;
 // }
 
-li.game.winner {
-    font-weight: bold;
-}
+// mat-form-field {
+//     width: 50px;
+// }
 
-li.game span {
-    float: right;
-    margin-right: 5px;
-}
+// .round .game-spacer {
+//     flex-grow: 1;
+// }
 
-li.game-top {
-    border-bottom: 1px solid #aaa;
-}
+// li {
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
+//     align-items: center;
+// }
 
-li.game-spacer {
-    border-right: 1px solid #aaa;
-    min-height: 40px;
-}
+// // li.game {
+// //     padding-left: 20px;
+// // }
 
-li.game-bottom {
-    border-top: 1px solid #aaa;
-}
+// li.game.winner {
+//     font-weight: bold;
+// }
+
+// li.game span {
+//     float: right;
+//     margin-right: 5px;
+// }
+
+// li.game-top {
+//     border-bottom: 1px solid #aaa;
+// }
+
+// li.game-spacer {
+//     border-right: 1px solid #aaa;
+//     min-height: 40px;
+// }
+
+// li.game-bottom {
+//     border-top: 1px solid #aaa;
+// }
 
 input {
     font-size: large;
 }
 
-.singleTeam {
-    align-self: center;
-    width: 200px;
-    margin-top: auto;
-}
+// .singleTeam {
+//     align-self: center;
+//     width: 200px;
+//     margin-top: auto;
+// }

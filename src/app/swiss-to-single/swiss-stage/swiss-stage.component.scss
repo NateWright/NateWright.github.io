@@ -1,62 +1,6 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
-// table {
-//     width: 50vw;
-// }
-
-// img {
-//     height: 25px;
-// }
-
-.container {
-    display: flex;
-    justify-content: center;
-}
-
-.swiss-container {
-    display: flex;
-    justify-content: center;
-}
-
-@media only screen and (max-width: 1600px) {
-    .swiss-container {
-        flex-direction: column;
-    }
-
-    .round3 {
-        flex-direction: column;
-
-    }
-
-}
-
-.swissHolder {
-    width: 80%;
-}
-
-.round3 {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-}
-
-.round3Item {
-    flex-grow: 1;
-    min-width: 50%;
-}
-
-// table {
-//     width: 80%;
-//     margin: auto;
-// }
-
-// .item {
-//     width: 80%;
-// }
-
-// .matchup-table {}
 $my-palette: mat.define-palette(mat.$grey-palette);
 
 mat-card {

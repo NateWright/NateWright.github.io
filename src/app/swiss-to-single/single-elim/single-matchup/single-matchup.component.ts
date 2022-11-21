@@ -8,7 +8,7 @@ import { ReplaySubject } from 'rxjs';
 })
 export class SingleMatchupComponent implements OnInit {
   @Input() team: ReplaySubject<number> | number = -1;
-  @Input() top!: number;
+  @Input() left: number = 0;
   @Output() teamWon = new EventEmitter<void>();
   teamScore = 0;
   constructor() { }

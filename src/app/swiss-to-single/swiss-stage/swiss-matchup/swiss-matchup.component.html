@@ -48,24 +48,30 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> -->
 
-<div class="container">
-    <div *ngFor="let element of round.data">
-        <div class="row">
-            <app-team-card [id]="element.team1" class="swissTeam"></app-team-card>
-            <mat-form-field appearance="fill" color="primary" style="width: 100px;">
+<div *ngFor="let element of round.data">
+    <div class="row w-100 justify-content-between mt-3">
+        <div class="col-12 col-md-4">
+            <app-team-card [id]="element.team1"></app-team-card>
+        </div>
+        <div class="col-12 col-md-2">
+            <mat-form-field appearance="fill" color="primary" style="width: 100%;">
                 <mat-label>Score</mat-label>
                 <input matInput type="number" [(ngModel)]="element.team1Wins" (input)="this.checkValid()" min="0"
-                    max="3">
+                    max="3" class="fs-4">
             </mat-form-field>
-            <mat-form-field appearance="fill" color="primary" style="width: 100px; padding: 0;">
+        </div>
+        <div class="col-12 col-md-2">
+            <mat-form-field appearance="fill" color="primary" style="width: 100%">
                 <mat-label>Score</mat-label>
                 <input matInput type="number" [(ngModel)]="element.team2Wins" (input)="this.checkValid()" min="0"
-                    max="3">
+                    max="3" class="fs-4">
             </mat-form-field>
-            <app-team-card [id]="element.team2" class="swissTeam"></app-team-card>
         </div>
-        <mat-divider></mat-divider>
+        <div class="col-12 col-md-4  mb-3">
+            <app-team-card [id]="element.team2"></app-team-card>
 
+        </div>
     </div>
+    <mat-divider></mat-divider>
 
 </div>
